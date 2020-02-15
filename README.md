@@ -1,6 +1,6 @@
 ###Getting Started
 
--Install Nodejs from Nodejs Official Page
+- Install Nodejs from Nodejs Official Page
 -Open your terminal
 -Navigate to the project
 -Run npm install or yarn install if you use Yarn
