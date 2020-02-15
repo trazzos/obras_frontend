@@ -1,4 +1,5 @@
 ###Getting Started
+
 *Install Nodejs from Nodejs Official Page
 *Open your terminal
 *Navigate to the project
