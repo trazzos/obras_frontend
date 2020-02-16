@@ -1,3 +1,8 @@
+const path = require('path')
+function resolve (dir) {
+  return path.join(__dirname, dir)
+}
+
 module.exports = {
   devServer: {
     disableHostCheck: true,
@@ -13,4 +18,10 @@ module.exports = {
       enableInSFC: false,
     },
   },
+// If you add an alias here, remember to stop and run yarn serve again
+  chainWebpack: config => {
+    config.resolve.alias
+      .set('@', resolve('src'))
+      .set('companyModule', resolve('src/views/company'))
+  }
 }
