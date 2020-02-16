@@ -1,7 +1,10 @@
 import Vue from 'vue'
 import Vuetify from 'vuetify/lib'
-import i18n from '@/i18n'
+// import i18n from '@/i18n'
 import '@/sass/overrides.sass'
+
+ import en from 'vuetify/src/locale/en.ts'
+import es from 'vuetify/src/locale/es.ts'
 
 Vue.use(Vuetify)
 
@@ -14,7 +17,8 @@ const theme = {
 
 export default new Vuetify({
   lang: {
-    t: (key, ...params) => i18n.t(key, params),
+    locales: { es, en },
+    current: 'es',
   },
   theme: {
     themes: {

@@ -21,7 +21,9 @@ import './plugins/vee-validate'
 import './plugins/vue-world-map'
 import vuetify from './plugins/vuetify'
 import i18n from './i18n'
+import axios from './axios'
 
+Vue.prototype.$http = axios
 Vue.config.productionTip = false
 
 new Vue({
