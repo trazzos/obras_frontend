@@ -10,3 +10,11 @@
 
 *npm run build to build your app for production
 *npm run lint to run linting.
+
+Entry point is 
+router.js
+And main vue is
+dashboard/Index.vue
+
+The left menu is
+components/core/Drawer
