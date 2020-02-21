@@ -86,8 +86,27 @@
         },
         {
           icon: 'mdi-domain',
-          title: 'Empresas',
+          title: 'Catalogos',
           to: '/company',
+        },
+        {
+          icon: 'mdi-domain',
+          title: 'Catalogos',
+          to: '/cat',
+          children: [
+            {
+              title: 'Empresas',
+              to: 'list',
+            },
+            {
+              title: 'Usuarios',
+              to: 'Seguimiento',
+            },
+            {
+              title: 'Roles',
+              to: 'Seguimiento',
+            },
+          ],
         },
       ],
     }),

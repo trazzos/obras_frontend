@@ -9,21 +9,6 @@
       inline
       class="px-5 py-3"
     >
-
-<!--
-      <v-text-field
-        v-model="search"
-        append-icon="mdi-magnify"
-        class="ml-auto"
-        label="Search"
-        hide-details
-        single-line
-        style="max-width: 250px;"
-      />
-
-      <v-divider class="mt-3" />
--->
-
       <v-data-table
         :headers="headers"
         :items="items"
@@ -32,7 +17,35 @@
         :sort-by="['name', 'office']"
         :sort-desc="[false, true]"
         multi-sort
-      />
+      >
+        <template v-slot:top>
+          <modal-company />
+        </template>
+        <template v-slot:item.action = "{ item }">
+          <v-btn
+            color="success"
+            title="Editar"
+            fab
+            x-small
+            @click="editItem(item)"
+          >
+            <v-icon dark>
+              mdi-pencil
+            </v-icon>
+          </v-btn>
+          <v-btn
+            color="red"
+            title="Eliminar"
+            @click="deleteItem(item)"
+            x-small
+            fab
+          >
+            <v-icon>
+              mdi-delete
+            </v-icon>
+          </v-btn>
+        </template>
+      </v-data-table>
     </base-material-card>
   </v-container>
 </template>
@@ -42,9 +55,12 @@
   import { mapState, mapActions } from 'vuex'
 
   import companyStore from 'companyModule/stores/companyStore'
-
+  import modalCompany from 'companyModule/components/ModalCompany'
   export default {
     name: 'DashboardDataTables',
+    components: {
+      modalCompany,
+    },
     beforeCreate () {
       if (!this.$store.state.companyStore) {
         this.$store.registerModule(companyStore.name, companyStore)
@@ -56,6 +72,8 @@
     methods: {
       ...mapActions(companyStore.name, [
         'companyGetApi',
+        'deleteItem',
+        'editItem',
       ]),
     },
     computed: {
