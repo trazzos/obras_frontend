@@ -17,9 +17,8 @@ export default new Router({
           path: '',
           component: () => import('@/views/dashboard/Dashboard'),
         },
-        // Pages
         {
-          name: 'Catalogos',
+          name: 'Empresas',
           path: 'company',
           component: () => import('companyModule/components/Index'),
         },
