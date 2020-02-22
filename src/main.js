@@ -13,6 +13,7 @@
 
 import Vue from 'vue'
 import App from './App.vue'
+
 import router from './router'
 import store from './store'
 import './plugins/base'
@@ -21,9 +22,16 @@ import './plugins/vee-validate'
 import './plugins/vue-world-map'
 import vuetify from './plugins/vuetify'
 import i18n from './i18n'
-import axios from './axios'
 
-Vue.prototype.$http = axios
+import VueAxios from 'vue-axios'
+import axios from './axios'
+import VueAuth from '@websanova/vue-auth'
+import auth from './plugins/auth'
+Vue.router = router
+Vue.use(VueAxios, axios)
+Vue.use(VueAuth, auth)
+
+// Vue.prototype.$http = axios
 Vue.config.productionTip = false
 
 new Vue({

@@ -16,6 +16,9 @@ export default new Router({
           name: 'Login',
           path: '',
           component: () => import('@/views/pages/Login'),
+          meta: {
+            auth: false,
+          },
         },
       ],
     },
@@ -28,11 +31,17 @@ export default new Router({
           name: 'Dashboard',
           path: '',
           component: () => import('@/views/dashboard/Dashboard'),
+          meta: {
+            auth: true,
+          },
         },
         {
           name: 'Empresas',
           path: '/company',
           component: () => import('companyModule/components/Index'),
+          meta: {
+            auth: true,
+          },
         },
       ],
     },
