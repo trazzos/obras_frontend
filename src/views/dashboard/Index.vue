@@ -7,6 +7,8 @@
     <dashboard-core-view />
 
     <dashboard-core-settings v-model="expandOnHover" />
+
+    <base-snackbar></base-snackbar>
   </v-app>
 </template>
 

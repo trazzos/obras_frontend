@@ -5,99 +5,97 @@
     tag="section"
   >
     <v-row justify="center">
-      <v-slide-y-transition appear>
-        <base-material-card
-          color="success"
-          light
-          max-width="100%"
-          width="400"
-          class="px-5 py-3"
-        >
-          <template v-slot:heading>
-            <div class="text-center">
-              <h1 class="display-2 font-weight-bold mb-2">
-                Login
-              </h1>
+      <v-form
+        ref="form"
+        lazy-validation
+      >
+        <v-slide-y-transition appear>
+          <base-material-card
+            color="success"
+            light
+            max-width="100%"
+            width="400"
+            class="px-5 py-3"
+          >
+            <v-card-text class="text-center">
+              <v-text-field
+                v-model="email"
+                :rules="[rules.required]"
+                color="secondary"
+                label="Email..."
+                prepend-icon="mdi-email"
+              />
 
-              <v-btn
-                v-for="(social, i) in socials"
-                :key="i"
-                :href="social.href"
-                class="ma-1"
-                icon
-                rel="noopener"
-                target="_blank"
+              <v-text-field
+                v-model="password"
+                :rules="[rules.required]"
+                type="password"
+                class="mb-8"
+                color="secondary"
+                label="Password..."
+                prepend-icon="mdi-lock-outline"
+              />
+
+              <pages-btn
+                large
+                color=""
+                depressed
+                class="v-btn--text success--text"
+                :loading="button_loading"
+                @click="validateForm"
               >
-                <v-icon
-                  v-text="social.icon"
-                />
-              </v-btn>
-            </div>
-          </template>
-
-          <v-card-text class="text-center">
-            <div class="text-center grey--text body-1 font-weight-light">
-              Or Be Classical
-            </div>
-
-            <v-text-field
-              color="secondary"
-              label="First Name..."
-              prepend-icon="mdi-face"
-              class="mt-10"
-            />
-
-            <v-text-field
-              color="secondary"
-              label="Email..."
-              prepend-icon="mdi-email"
-            />
-
-            <v-text-field
-              class="mb-8"
-              color="secondary"
-              label="Password..."
-              prepend-icon="mdi-lock-outline"
-            />
-
-            <pages-btn
-              large
-              color=""
-              depressed
-              class="v-btn--text success--text"
-            >
-              Let's Go
-            </pages-btn>
-          </v-card-text>
-        </base-material-card>
-      </v-slide-y-transition>
+                Ingresar
+              </pages-btn>
+            </v-card-text>
+          </base-material-card>
+        </v-slide-y-transition>
+      </v-form>
     </v-row>
   </v-container>
 </template>
 
 <script>
-  export default {
-    name: 'PagesLogin',
+  import userStore from 'userModule/stores/userStore'
+  import { mapActions } from 'vuex'
+  import { mapFields } from 'vuex-map-fields'
 
+  export default {
+    name: 'UserLogin',
     components: {
       PagesBtn: () => import('./components/Btn'),
     },
-
-    data: () => ({
-      socials: [
-        {
-          href: '#',
-          icon: 'mdi-facebook-box',
+    data () {
+      return {
+        rules: {
+          required: value => !!value || 'Required.',
         },
-        {
-          href: '#',
-          icon: 'mdi-twitter',
-        },
-        {
-          href: '#',
-          icon: 'mdi-github-box',
-        },
-      ],
-    }),
+      }
+    },
+    computed: {
+      ...mapFields(userStore.name, [
+        'credentials.email',
+        'credentials.password',
+        'credentials.button_loading',
+      ]),
+      ...mapFields('globalModule', [
+        'snackbar.show',
+        'snackbar.text',
+      ]),
+    },
+    beforeCreate () {
+      if (!this.$store.state.userStore) {
+        this.$store.registerModule(userStore.name, userStore)
+      }
+    },
+    methods: {
+      ...mapActions(userStore.name, [
+        'userLogin',
+      ]),
+      validateForm () {
+        if (this.$refs.form.validate()) {
+          this.userLogin(this.$auth)
+        }
+      },
+    },
   }
 </script>
