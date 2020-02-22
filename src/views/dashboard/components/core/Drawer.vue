@@ -44,7 +44,6 @@
           :key="`group-${i}`"
           :item="item"
         >
-          <!--  -->
         </base-item-group>
 
         <base-item
@@ -82,12 +81,23 @@
         {
           icon: 'mdi-view-dashboard',
           title: 'dashboard',
-          to: '/',
+          href: '/',
         },
         {
           icon: 'mdi-domain',
-          title: 'Empresas',
-          to: 'company',
+          title: 'Catalogo',
+          group: '',
+          children: [
+            {
+              name: 'Empresas',
+              title: 'Empresa',
+              to: 'company',
+            },
+            {
+              name: 'user',
+              title: 'Usuario',
+              to: 'user',
+            }],
         },
       ],
     }),
