@@ -87,7 +87,7 @@
         {
           icon: 'mdi-domain',
           title: 'Empresas',
-          to: '/company',
+          to: 'company',
         },
       ],
     }),

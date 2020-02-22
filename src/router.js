@@ -17,11 +17,10 @@ export default new Router({
           path: '',
           component: () => import('@/views/dashboard/Dashboard'),
         },
-        // Pages
         {
           name: 'Empresas',
           path: 'company',
-          component: () => import('@/views/company/components/Index'),
+          component: () => import('companyModule/components/Index'),
         },
       ],
     },
