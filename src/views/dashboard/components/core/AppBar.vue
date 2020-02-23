@@ -105,7 +105,6 @@
       </v-list>
     </v-menu>
 
-    <!--<span @click.prevent="$auth.logout()">test</span>-->
     <v-menu
       bottom
       left

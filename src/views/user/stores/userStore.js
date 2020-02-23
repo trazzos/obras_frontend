@@ -1,5 +1,3 @@
-// import companyGetApi from 'companyModule/api/companyGetApi'
-
 import { getField, updateField } from 'vuex-map-fields'
 function initCredentials () {
   return {

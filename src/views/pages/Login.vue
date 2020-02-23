@@ -61,9 +61,6 @@
 
   export default {
     name: 'UserLogin',
-    components: {
-      PagesBtn: () => import('./components/Btn'),
-    },
     data () {
       return {
         rules: {
