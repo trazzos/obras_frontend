@@ -18,7 +18,7 @@ export default new Router({
           component: () => import('@/views/dashboard/Dashboard'),
         },
         {
-          name: 'Empresas',
+          name: 'Company',
           path: 'company',
           component: () => import('companyModule/components/Index'),
         },
