@@ -81,7 +81,7 @@
         {
           icon: 'mdi-view-dashboard',
           title: 'dashboard',
-          href: '/',
+          to: '/',
         },
         {
           icon: 'mdi-domain',
