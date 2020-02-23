@@ -21,9 +21,14 @@ import './plugins/vee-validate'
 import './plugins/vue-world-map'
 import vuetify from './plugins/vuetify'
 import i18n from './i18n'
+import VueAxios from 'vue-axios'
 import axios from './axios'
+import VueAuth from '@websanova/vue-auth'
+import auth from './plugins/auth'
 
-Vue.prototype.$http = axios
+Vue.router = router
+Vue.use(VueAxios, axios)
+Vue.use(VueAuth, auth)
 Vue.config.productionTip = false
 
 new Vue({

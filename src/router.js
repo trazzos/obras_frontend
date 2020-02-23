@@ -8,6 +8,21 @@ export default new Router({
   base: process.env.BASE_URL,
   routes: [
     {
+      path: '/login',
+      component: () => import('@/views/pages/Index'),
+      children: [
+        // Login
+        {
+          name: 'Login',
+          path: '',
+          component: () => import('@/views/pages/Login'),
+          meta: {
+            auth: false,
+          },
+        },
+      ],
+    },
+    {
       path: '/',
       component: () => import('@/views/dashboard/Index'),
       children: [
@@ -16,11 +31,17 @@ export default new Router({
           name: 'Dashboard',
           path: '',
           component: () => import('@/views/dashboard/Dashboard'),
+          meta: {
+            auth: true,
+          },
         },
         {
           name: 'Company',
           path: 'company',
           component: () => import('companyModule/components/Index'),
+          meta: {
+            auth: true,
+          },
         },
       ],
     },

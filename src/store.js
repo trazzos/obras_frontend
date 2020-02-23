@@ -1,9 +1,13 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import globalModule from '@/modules/globalModule'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+  modules: {
+    globalModule,
+  },
   state: {
     barColor: 'rgba(0, 0, 0, .8), rgba(0, 0, 0, .8)',
     barImage: 'https://demos.creative-tim.com/material-dashboard-pro/assets/img/sidebar-1.jpg',

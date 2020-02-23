@@ -23,5 +23,6 @@ module.exports = {
     config.resolve.alias
       .set('@', resolve('src'))
       .set('companyModule', resolve('src/views/company'))
+      .set('userModule', resolve('src/views/user'))
   }
 }

@@ -145,10 +145,26 @@
             <v-list-item-title v-text="p.title" />
           </app-bar-item>
         </template>
+        <v-hover
+          v-slot:default="{ hover }"
+        >
+          <v-list-item
+            v-if="$auth.check()"
+            key="`logout"
+            :class="{ 'v-list-item--link theme--dark': hover, 'white--text': hover, 'secondary elevation-12': hover, 'black--text': !hover }"
+            @click.prevent="$auth.logout()"
+          >
+            <v-list-item-title v-text="logoutText" />
+          </v-list-item>
+        </v-hover>
+
       </v-list>
     </v-menu>
   </v-app-bar>
 </template>
+
+<style lang="scss" scoped>
+</style>
 
 <script>
   // Components
@@ -205,8 +221,8 @@
         { title: 'Profile' },
         { title: 'Settings' },
         { divider: true },
-        { title: 'Log out' },
       ],
+      logoutText: 'Log out',
     }),
 
     computed: {
@@ -217,6 +233,9 @@
       ...mapMutations({
         setDrawer: 'SET_DRAWER',
       }),
+      logout () {
+        console.log('test')
+      },
     },
   }
 </script>
