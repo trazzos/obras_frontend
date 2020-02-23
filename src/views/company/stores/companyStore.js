@@ -2,6 +2,8 @@ import companyGetApi from 'companyModule/api/companyGetApi'
 import companyCreateApi from 'companyModule/api/companyCreateApi'
 import companyDeleteApi from 'companyModule/api/companyDeleteApi'
 import companyPatchApi from 'companyModule/api/companyPatchApi'
+import catStateInegiApi from 'companyModule/api/catStateInegiApi'
+import catMunicipioInegiApi from 'companyModule/api/catMunicipioInegiApi'
 
 import { getField, updateField } from 'vuex-map-fields'
 function initItem () {
@@ -36,6 +38,10 @@ function initState () {
     current_index: -1,
     current_item: initItem(),
     dialog: false,
+    states: [],
+    municipios: [],
+    localidades: [],
+
   }
 }
 
@@ -66,6 +72,12 @@ const mutations = {
     state.dialog = status
   },
   updateField,
+  loadStates (state, payload) {
+   state.states = payload
+  },
+  loadMunicipios (state, payload) {
+    state.municipios = payload
+  },
 }
 const getters = {
    getField,
@@ -92,6 +104,15 @@ const actions = {
     commit('showModal', false)
     commit('resetCurrentItem')
     dispatch('companyGetApi')
+  },
+  async loadStates ({ state, commit }) {
+    const response = await catStateInegiApi()
+    commit('loadStates', response.data.datos)
+  },
+  async loadMunicipio ({ state, commit }, cveAgee) {
+    const response = await catMunicipioInegiApi(cveAgee)
+    console.log(response)
+    commit('loadMunicipios', response.data.datos)
   },
 }
 

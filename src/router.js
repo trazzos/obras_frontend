@@ -36,8 +36,8 @@ export default new Router({
           },
         },
         {
-          name: 'Empresas',
-          path: '/company',
+          name: 'Company',
+          path: 'company',
           component: () => import('companyModule/components/Index'),
           meta: {
             auth: true,
