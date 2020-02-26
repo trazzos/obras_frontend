@@ -113,7 +113,7 @@ const actions = {
 }
 
 export default {
-  name: 'companyStore',
+  name: 'stageStore',
   namespaced: true,
   state,
   getters,
