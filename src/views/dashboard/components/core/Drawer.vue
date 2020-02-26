@@ -5,7 +5,6 @@
     :dark="barColor !== 'rgba(228, 226, 226, 1), rgba(255, 255, 255, 0.7)'"
     :expand-on-hover="expandOnHover"
     :right="$vuetify.rtl"
-    :src="barImage"
     mobile-break-point="960"
     app
     mini-variant-width="80"
@@ -50,7 +49,8 @@
           v-else
           :key="`item-${i}`"
           :item="item"
-        />
+        >
+        </base-item>
       </template>
 
       <!-- Style cascading bug  -->
@@ -90,13 +90,30 @@
           children: [
             {
               name: 'Empresas',
-              title: 'Empresa',
+              title: 'Empresas',
               to: 'company',
+              vIcon: 'mdi-domain',
             },
             {
-              name: 'user',
-              title: 'Usuario',
+              name: 'Folios',
+              title: 'Folios',
+              to: 'invoice',
+              iconfont: 'mdi-domain',
+            },
+            {
+              name: 'Usuarios',
+              title: 'Usuarios',
               to: 'user',
+            },
+            {
+              name: 'Etapas',
+              title: 'Etapas',
+              to: 'stage',
+            },
+            {
+              name: 'Tareas',
+              title: 'Tareas',
+              to: 'task',
             }],
         },
       ],

@@ -5,7 +5,7 @@
   >
     <base-material-card
       color="primary"
-      title="Empresas"
+      title="Etapas"
       inline
       class="px-5 py-3"
     >
@@ -54,15 +54,15 @@
 
   import { mapState, mapActions } from 'vuex'
 
-  import companyStore from 'companyModule/stores/companyStore'
-  import modalCompany from 'companyModule/components/ModalCompany'
+  import companyStore from 'stageModule/stores/stageStore'
+  import modalCompany from 'stageModule/components/ModalStage'
   export default {
     name: 'DashboardDataTables',
     components: {
       modalCompany,
     },
     beforeCreate () {
-      if (!this.$store.state.companyStore) {
+      if (!this.$store.state.stageStore) {
         this.$store.registerModule(companyStore.name, companyStore)
       }
     },

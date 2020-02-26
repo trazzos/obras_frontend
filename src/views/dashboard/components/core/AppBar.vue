@@ -210,19 +210,13 @@
     },
 
     data: () => ({
-      notifications: [
-        'Mike John Responded to your email',
-        'You have 5 new tasks',
-        'You\'re now friends with Andrew',
-        'Another Notification',
-        'Another one',
-      ],
+      notifications: [],
       profile: [
-        { title: 'Profile' },
-        { title: 'Settings' },
+        { title: 'Perfil' },
+        { title: 'Configuracion' },
         { divider: true },
       ],
-      logoutText: 'Log out',
+      logoutText: 'Cerrar sesión',
     }),
 
     computed: {

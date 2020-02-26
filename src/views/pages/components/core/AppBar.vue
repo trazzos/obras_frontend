@@ -17,6 +17,7 @@
         v-for="(item, i) in items"
         :key="i"
         :to="item.to"
+        class = "v-btn--text white--text bold"
         min-height="48"
         min-width="40"
         text
@@ -43,36 +44,14 @@
     data: () => ({
       items: [
         {
-          icon: 'mdi-view-dashboard',
-          text: 'Dashboard',
-          to: '/',
-        },
-        {
-          icon: 'mdi-currency-usd',
-          text: 'Pricing',
-          to: '/pages/pricing',
-        },
-        {
+          color: 'primary',
           icon: 'mdi-account-multiple-plus',
-          text: 'Register',
-          to: '/pages/register',
-        },
-        {
-          icon: 'mdi-fingerprint',
-          text: 'Login',
-          to: '/pages/login',
-        },
-        {
-          icon: 'mdi-lock-open-outline',
-          text: 'Lock',
-          to: '/pages/lock',
+          text: 'Registrate',
+          to: '/register',
         },
       ],
       titles: {
-        '/pages/lock': 'Lock Page',
-        '/pages/login': 'Login Page',
-        '/pages/pricing': 'Pricing Page',
-        '/pages/register': 'Register Page',
+        '/register': 'Registrate',
       },
     }),
 

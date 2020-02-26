@@ -11,7 +11,7 @@
       >
         <v-slide-y-transition appear>
           <base-material-card
-            color="success"
+            color="primary"
             light
             max-width="100%"
             width="400"
@@ -37,10 +37,9 @@
               />
 
               <pages-btn
-                large
-                color=""
-                depressed
-                class="v-btn--text success--text"
+                color="primary"
+                rounded
+                class="v-btn--text white--text"
                 :loading="button_loading"
                 @click="validateForm"
               >
@@ -61,10 +60,13 @@
 
   export default {
     name: 'UserLogin',
+    components: {
+      PagesBtn: () => import('./components/Btn'),
+    },
     data () {
       return {
         rules: {
-          required: value => !!value || 'Required.',
+          required: value => !!value || 'Campo requerido.',
         },
       }
     },
