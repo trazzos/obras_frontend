@@ -44,6 +44,14 @@ export default new Router({
           },
         },
         {
+          name: 'Usuarios',
+          path: 'user',
+          component: () => import('userModule/components/Index'),
+          meta: {
+            auth: true,
+          },
+        },
+        {
           name: 'Etapas',
           path: 'stage',
           component: () => import('stageModule/components/Index'),
