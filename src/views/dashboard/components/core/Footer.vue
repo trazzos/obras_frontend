@@ -43,15 +43,15 @@
 <script>
   export default {
     name: 'DashboardCoreFooter',
+    data: () => ({
+      links: [],
+    }),
     computed: {
       currentDate () {
         const today = new Date()
         return today.getFullYear()
       },
     },
-    data: () => ({
-      links: [],
-    }),
   }
 </script>
 

@@ -47,15 +47,15 @@
 <script>
   export default {
     name: 'PagesCoreFooter',
+    data: () => ({
+      links: [],
+    }),
     computed: {
       currentDate () {
         const today = new Date()
         return today.getFullYear()
       },
     },
-    data: () => ({
-      links: [],
-    }),
   }
 </script>
 

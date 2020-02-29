@@ -6,7 +6,7 @@
 
     <pages-core-footer />
 
-    <base-snackbar></base-snackbar>
+    <base-snackbar />
   </v-app>
 </template>
 
