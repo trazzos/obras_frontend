@@ -110,11 +110,7 @@
               title: 'Etapas',
               to: 'stage',
             },
-            {
-              name: 'Tareas',
-              title: 'Tareas',
-              to: 'task',
-            }],
+          ],
         },
       ],
     }),

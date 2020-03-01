@@ -23,48 +23,50 @@
         </v-card-title>
         <v-card-text>
           <v-container>
-            <form-company />
+            <c-form-stage />
           </v-container>
         </v-card-text>
+        <v-divider />
         <v-card-actions>
-          <v-spacer></v-spacer>
           <v-btn
-            color="blue darken-1"
-            text
+            outlined
+            color="primary"
+            class="v-btn--text white--text font-weight-bold"
             @click="showModal(false)"
-          >Cancel</v-btn>
+          >Cancelar</v-btn>
           <v-btn
-            color="blue darken-1"
-            text
-            @click="saveCompany"
-          >Save</v-btn>
+            outlined
+            color="primary"
+            class="v-btn--text white--text font-weight-bold"
+            @click="saveStage"
+          >Guardar</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
   </v-toolbar>
 </template>
 <script>
-  import formCompany from 'companyModule/components/FormCompany'
-  import companyStore from 'companyModule/stores/companyStore'
+  import CFormStage from 'stageModule/components/CFormStage'
+  import stageStore from 'stageModule/stores/stageStore'
   import { mapFields } from 'vuex-map-fields'
   import { mapActions, mapMutations } from 'vuex'
   export default {
-    name: 'modalCompany',
+    name: 'c-modal-stage',
     components: {
-      formCompany,
+      CFormStage,
     },
     computed: {
-      ...mapFields(companyStore.name, [
+      ...mapFields(stageStore.name, [
         'dialog',
-        'current_index',
+        'current_stage_index',
       ]),
       titleForm () {
-        return (this.current_index === -1) ? 'Agregar etapa' : 'Editar etapa'
+        return (this.current_stage_index === -1) ? 'Agregar etapa' : 'Editar etapa'
       },
     },
     methods: {
-      ...mapActions(companyStore.name, ['saveCompany']),
-      ...mapMutations(companyStore.name, ['showModal']),
+      ...mapActions(stageStore.name, ['saveStage']),
+      ...mapMutations(stageStore.name, ['showModal']),
     },
   }
 </script>

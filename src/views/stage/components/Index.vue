@@ -11,42 +11,26 @@
     >
       <v-data-table
         :headers="headers"
-        :items="items"
+        :items="stages"
         :loading="loading"
         :search.sync="search"
-        :sort-by="['name', 'office']"
+        :sort-by="['name']"
         :sort-desc="[false, true]"
         multi-sort
       >
         <template v-slot:top>
-          <modal-company />
+          <c-modal-stage />
         </template>
-        <template v-slot:item.action = "{ item }">
-          <v-btn
-            color="success"
-            title="Editar"
-            fab
-            x-small
-            @click="editItem(item)"
-          >
-            <v-icon dark>
-              mdi-pencil
-            </v-icon>
-          </v-btn>
-          <v-btn
-            color="red"
-            title="Eliminar"
-            @click="deleteItem(item)"
-            x-small
-            fab
-          >
-            <v-icon>
-              mdi-delete
-            </v-icon>
-          </v-btn>
+        <template v-slot:item.action="{ item }">
+          <c-action-stage
+            :item ="item"
+            @editItem="editStage"
+            @viewListTask="viewListTask"
+          />
         </template>
       </v-data-table>
     </base-material-card>
+    <c-modal-task-stage></c-modal-task-stage>
   </v-container>
 </template>
 
@@ -54,33 +38,38 @@
 
   import { mapState, mapActions } from 'vuex'
 
-  import companyStore from 'stageModule/stores/stageStore'
-  import modalCompany from 'stageModule/components/ModalStage'
+  import stageStore from 'stageModule/stores/stageStore'
+  import CModalStage from 'stageModule/components/CModalStage'
+  import CModalTaskStage from 'stageModule/components/CModalTaskStage'
+  import CActionStage from 'stageModule/components/CActionStage'
   export default {
     name: 'DashboardDataTables',
     components: {
-      modalCompany,
+      CModalStage,
+      CActionStage,
+      CModalTaskStage,
     },
     beforeCreate () {
       if (!this.$store.state.stageStore) {
-        this.$store.registerModule(companyStore.name, companyStore)
+        this.$store.registerModule(stageStore.name, stageStore)
       }
     },
     mounted () {
-      this.companyGetApi()
+      this.stageGetApi()
     },
     methods: {
-      ...mapActions(companyStore.name, [
-        'companyGetApi',
+      ...mapActions(stageStore.name, [
+        'stageGetApi',
         'deleteItem',
-        'editItem',
+        'editStage',
+        'viewListTask',
       ]),
     },
     computed: {
-      ...mapState(companyStore.name, [
+      ...mapState(stageStore.name, [
         'loading',
         'headers',
-        'items',
+        'stages',
       ]),
     },
     data: () => ({
