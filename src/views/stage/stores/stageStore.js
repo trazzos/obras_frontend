@@ -169,8 +169,6 @@ const actions = {
     if ('payload' in response.data) {
       response.data.payload && commit('removeItemInStages', item)
       commit('resetCurrentTask')
-      response.type = 'success'
-      response.data.message = 'Registro eliminado'
       commit('globalModule/errorSnackbar', response, { root: true })
     } else {
       commit('globalModule/errorSnackbar', response, { root: true })
@@ -184,12 +182,9 @@ const actions = {
       commit('showModal', { modal: 'modal_stage', status: false })
       commit('resetCurrentTask')
       dispatch('stageGetApi')
-      response.type = 'success'
-      response.data.message = 'Registro actualizado'
       commit('globalModule/errorSnackbar', response, { root: true })
     } else {
       commit('setProgressLoading', { name: 'loading_modal_stage', status: false })
-      response.type = 'error'
       commit('globalModule/errorSnackbar', response, { root: true })
     }
   },
@@ -210,12 +205,9 @@ const actions = {
       commit('setProgressLoading', { name: 'loading_modal_task', status: false })
       commit('showModal', { modal: 'modal_task', status: false })
       commit('resetCurrentTask')
-      response.type = 'success'
-      response.data.message = 'Registro actualizado'
       commit('globalModule/errorSnackbar', response, { root: true })
     } else {
       commit('setProgressLoading', { name: 'loading_modal_task', status: false })
-      response.type = 'error'
       commit('globalModule/errorSnackbar', response, { root: true })
     }
   },
@@ -223,11 +215,8 @@ const actions = {
     const response = await taskDeleteApi(item.id)
     if ('payload' in response.data) {
       response.data.payload && commit('removeItemInTasks', item)
-      response.type = 'success'
-      response.data.message = 'Registro eliminado'
       commit('globalModule/errorSnackbar', response, { root: true })
     } else {
-      response.type = 'error'
       commit('globalModule/errorSnackbar', response, { root: true })
     }
   },
