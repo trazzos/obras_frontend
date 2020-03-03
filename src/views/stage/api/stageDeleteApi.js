@@ -1,8 +1,8 @@
 import axios from '@/axios'
-export default async function stageDeleteApi (uuid) {
+export default async function stageDeleteApi (id) {
   try {
-    return await axios.delete('/stage', { params: { uuid } })
+    return await axios.delete('/stage', { params: { id } })
   } catch (error) {
-    throw new Error(error)
+    return error.response
   }
 }

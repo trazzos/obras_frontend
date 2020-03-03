@@ -6,6 +6,7 @@
       md="12"
     >
       <v-text-field
+        outlined
         v-model="name"
         label="Nombre"
       />
@@ -18,14 +19,10 @@
   import { mapFields } from 'vuex-map-fields'
   export default {
     name: 'c-stage-form',
-    mounted () {
-    },
     computed: {
       ...mapFields(stageStore.name, [
         'current_stage.name',
       ]),
-    },
-    methods: {
     },
   }
 </script>

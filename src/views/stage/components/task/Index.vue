@@ -5,13 +5,14 @@
   >
       <v-toolbar
         flat
+        height="20"
       >
         <v-spacer></v-spacer>
         <v-btn
           color="primary"
           dark
           class="mb-2"
-          @click="showModalTask(true)"
+          @click="addTask"
         >Agregar</v-btn>
       </v-toolbar>
       <v-data-table
@@ -22,42 +23,35 @@
         :sort-by="['name']"
         :sort-desc="[false, true]"
         multi-sort
-        class="elevation-7"
+        class="mx-0 my-4 elevation-1"
       >
         <template v-slot:item.action="{ item }">
-            <c-action-task
-            @deleteItem="deleteTask"
+          <custom-action-row
+            :row ="item"
+            :actions="actions"
             @editItem="editTask"
-            :item="{ item }"
-            />
+            @deleteItem="deleteTask"
+          />
         </template>
       </v-data-table>
-    <c-modal-task></c-modal-task>
   </v-container>
 </template>
 
 <script>
 
-  import { mapState, mapActions, mapMutations } from 'vuex'
+  import { mapState, mapActions } from 'vuex'
   import stageStore from 'stageModule/stores/stageStore'
-  import CActionTask from 'stageModule/components/task/CActionTask'
-  import CModalTask from 'stageModule/components/task/CModalTask'
+  import CustomActionRow from 'globalModule/components/CustomActionRow'
   export default {
     name: 'DashboardDataTables',
     components: {
-      CActionTask,
-      CModalTask,
-    },
-    mounted () {
+      CustomActionRow,
     },
     methods: {
       ...mapActions(stageStore.name, [
         'deleteTask',
         'editTask',
-        'showModalTask',
-      ]),
-      ...mapMutations(stageStore.name, [
-        'showModalTask',
+        'addTask',
       ]),
     },
     computed: {
@@ -69,6 +63,24 @@
     },
     data: () => ({
       search: undefined,
+      actions: [
+        {
+          icon: 'mdi-pencil',
+          title: 'Editar',
+          color: 'primary',
+          handler: 'editItem',
+          isIcon: false,
+          isFab: true,
+        },
+        {
+          icon: 'mdi-delete',
+          title: 'Eliminar',
+          color: 'error',
+          handler: 'deleteItem',
+          isIcon: false,
+          isFab: true,
+        },
+      ],
     }),
   }
 </script>

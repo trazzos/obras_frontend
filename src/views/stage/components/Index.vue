@@ -19,18 +19,21 @@
         multi-sort
       >
         <template v-slot:top>
-          <c-modal-stage />
+          <custom-modal-stage />
         </template>
         <template v-slot:item.action="{ item }">
-          <c-action-stage
-            :item ="item"
+          <custom-action-row
+            :row ="item"
+            :actions="actions"
             @editItem="editStage"
             @viewListTask="viewListTask"
+            @deleteItem="deleteStage"
           />
         </template>
       </v-data-table>
     </base-material-card>
-    <c-modal-task-stage></c-modal-task-stage>
+    <custom-modal-task-stage></custom-modal-task-stage>
+    <custom-modal-task></custom-modal-task>
   </v-container>
 </template>
 
@@ -39,15 +42,17 @@
   import { mapState, mapActions } from 'vuex'
 
   import stageStore from 'stageModule/stores/stageStore'
-  import CModalStage from 'stageModule/components/CModalStage'
-  import CModalTaskStage from 'stageModule/components/CModalTaskStage'
-  import CActionStage from 'stageModule/components/CActionStage'
+  import CustomModalStage from 'stageModule/components/CustomModalStage'
+  import CustomModalTask from 'stageModule/components/task/CustomModalTask'
+  import CustomModalTaskStage from 'stageModule/components/CustomModalTaskStage'
+  import CustomActionRow from 'globalModule/components/CustomActionRow'
   export default {
     name: 'DashboardDataTables',
     components: {
-      CModalStage,
-      CActionStage,
-      CModalTaskStage,
+      CustomModalStage,
+      CustomActionRow,
+      CustomModalTaskStage,
+      CustomModalTask,
     },
     beforeCreate () {
       if (!this.$store.state.stageStore) {
@@ -60,7 +65,7 @@
     methods: {
       ...mapActions(stageStore.name, [
         'stageGetApi',
-        'deleteItem',
+        'deleteStage',
         'editStage',
         'viewListTask',
       ]),
@@ -74,6 +79,32 @@
     },
     data: () => ({
       search: undefined,
+      actions: [
+        {
+          icon: 'mdi-file-tree',
+          title: 'Ver tareas',
+          color: 'info',
+          handler: 'viewListTask',
+          isIcon: false,
+          isFab: true,
+        },
+        {
+          icon: 'mdi-pencil',
+          title: 'Editar',
+          color: 'primary',
+          handler: 'editItem',
+          isIcon: false,
+          isFab: true,
+        },
+        {
+          icon: 'mdi-delete',
+          title: 'Eliminar',
+          color: 'error',
+          handler: 'deleteItem',
+          isIcon: false,
+          isFab: true,
+        },
+      ],
     }),
   }
 </script>

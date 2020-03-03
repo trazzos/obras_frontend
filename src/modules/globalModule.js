@@ -17,7 +17,7 @@ const state = () => {
 const mutations = {
   updateField,
   errorSnackbar (state, response) {
-    state.snackbar.type = 'error'
+    state.snackbar.type = response.type
     state.snackbar.text = response.data.message
     state.snackbar.show = true
   },

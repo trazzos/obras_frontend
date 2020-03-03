@@ -2,9 +2,12 @@
   <v-row justify="center">
     <v-dialog
       v-model="modal_task_stage"
-      hide-overlay
       scrollable
       transition="dialog-bottom-transition"
+      hide-overlay
+      max-width="700"
+      persistent
+      no-click-animation
     >
       <v-card>
         <v-toolbar
@@ -15,11 +18,11 @@
           <v-btn
            icon
            dark
-           @click="showModalTaskStage(false)"
+           @click="showModal({ modal:'modal_task_stage', status:false })"
           >
           <v-icon>mdi-close</v-icon>
           </v-btn>
-          <v-toolbar-title>{{ titleForm }}</v-toolbar-title>
+          <v-toolbar-title class="white--text font-weight-bold">{{ titleForm }}</v-toolbar-title>
           <v-spacer></v-spacer>
         </v-toolbar>
         <v-card-text>
@@ -36,7 +39,7 @@
   import { mapMutations } from 'vuex'
 
   export default {
-    name: 'c-modal-task-stage',
+    name: 'custom-modal-task-stage',
     components: {
       task,
     },
@@ -50,10 +53,16 @@
       },
     },
     methods: {
-      ...mapMutations(stageStore.name, ['showModalTaskStage']),
+      ...mapMutations(stageStore.name, [
+        'showModal',
+        'resetCurrentStage',
+        'setTasks']),
+    },
+    watch: {
+      modal_task_stage (val) {
+        !val && this.resetCurrentStage()
+        !val && this.setTasks([])
+      },
     },
   }
 </script>
-<style scoped>
-
-</style>

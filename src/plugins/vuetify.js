@@ -5,8 +5,12 @@ import '@/sass/overrides.sass'
 
  import en from 'vuetify/src/locale/en.ts'
 import es from 'vuetify/src/locale/es.ts'
-
-Vue.use(Vuetify)
+import { Ripple } from 'vuetify/lib/directives'
+Vue.use(Vuetify, {
+  directives: {
+    Ripple,
+  },
+})
 
 const theme = {
   primary: '#9D2449',
