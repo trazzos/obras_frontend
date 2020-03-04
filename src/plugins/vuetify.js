@@ -5,14 +5,19 @@ import '@/sass/overrides.sass'
 
  import en from 'vuetify/src/locale/en.ts'
 import es from 'vuetify/src/locale/es.ts'
-
-Vue.use(Vuetify)
+import { Ripple } from 'vuetify/lib/directives'
+Vue.use(Vuetify, {
+  directives: {
+    Ripple,
+  },
+})
 
 const theme = {
   primary: '#9D2449',
   secondary: '#9C27b0',
   accent: '#9C27b0',
   info: '#00CAE3',
+  error: '#b71c1c',
 }
 
 export default new Vuetify({

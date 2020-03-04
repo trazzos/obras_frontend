@@ -1,8 +1,8 @@
 import axios from '@/axios'
-export default async function companyPatchApi (data) {
+export default async function stagePatchApi (data) {
   try {
-    return await axios.patch('/company', { ...data })
+    return await axios.patch('/stage', { ...data })
   } catch (error) {
-    throw new Error(error)
+    return error.response
   }
 }

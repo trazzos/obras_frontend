@@ -44,7 +44,6 @@ const actions = {
       redirect: '/',
       fetchUser: true,
     }).then(function (response) {
-      console.log(response)
     }).catch(function (error) {
       commit('globalModule/errorSnackbar', error.response, { root: true })
     }).then(function () {
