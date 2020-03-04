@@ -51,7 +51,7 @@
         dense
         outlined
         @change="loadMunicipio"
-      ></v-select>
+      />
     </v-col>
     <v-col
       cols="12"
@@ -64,7 +64,7 @@
         item-value="cve_agem"
         dense
         outlined
-      ></v-select>
+      />
     </v-col>
     <v-col
       cols="12"
@@ -84,9 +84,6 @@
   import { mapFields } from 'vuex-map-fields'
   export default {
     name: 'FormCompany',
-    mounted () {
-      this.loadStates()
-    },
     computed: {
       ...mapFields(companyStore.name, [
         'current_item.name',
@@ -98,6 +95,9 @@
         'states',
         'municipios',
       ]),
+    },
+    mounted () {
+      this.loadStates()
     },
     methods: {
       ...mapActions(companyStore.name, [

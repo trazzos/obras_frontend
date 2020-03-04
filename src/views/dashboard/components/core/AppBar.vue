@@ -157,7 +157,6 @@
             <v-list-item-title v-text="logoutText" />
           </v-list-item>
         </v-hover>
-
       </v-list>
     </v-menu>
   </v-app-bar>
