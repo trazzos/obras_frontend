@@ -5,7 +5,7 @@
     <v-spacer />
     <v-dialog
       v-model="dialog"
-      max-width="500px"
+      max-width="800px"
     >
       <template v-slot:activator="{ on }">
         <v-btn

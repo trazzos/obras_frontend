@@ -1,9 +1,9 @@
 <template>
   <v-row>
     <v-col
-      cols="12"
-      sm="6"
-      md="12"
+      cols="9"
+      sm="12"
+      md="9"
     >
       <v-text-field
         v-model="name"
@@ -11,13 +11,63 @@
       />
     </v-col>
     <v-col
-      cols="12"
+      cols="3"
+      sm="12"
+      md="3"
+    >
+      <v-text-field
+        v-model="ftr"
+        label="RFC"
+      />
+    </v-col>
+    <v-col
+      cols="6"
       sm="6"
-      md="12"
+      md="4"
+    >
+      <v-text-field
+        v-model="suburb"
+        label="Colonia"
+      />
+    </v-col>
+    <v-col
+      cols="6"
+      sm="6"
+      md="5"
     >
       <v-text-field
         v-model="address"
-        label="Direccion"
+        label="Domicilio"
+      />
+    </v-col>
+    <v-col
+      cols="1"
+      sm="4"
+      md="1"
+    >
+      <v-text-field
+        v-model="interior_number"
+        label="N°Int"
+      />
+    </v-col>
+        <v-col
+      cols="1"
+      sm="4"
+      md="1"
+    >
+      <v-text-field
+        v-model="exterior_number"
+        label="N°Ext"
+      />
+    </v-col>
+    <v-col
+      cols="12"
+      sm="4"
+      md="1"
+    >
+      <v-text-field
+        v-model="postal_code"
+        label="CP"
       />
     </v-col>
     <v-col
@@ -26,24 +76,45 @@
     >
       <v-text-field
         v-model="email"
-        label="Email"
+        label="Correo Electrónico"
       />
     </v-col>
     <v-col
       cols="12"
-      sm="6"
+      sm="3"
+      md="3"
     >
       <v-text-field
-        v-model="cp"
-        label="Codigo Postal"
+        v-model="phone"
+        label="Telefono"
       />
     </v-col>
     <v-col
       cols="12"
-      sm="6"
+      sm="3"
+      md="3"
+    >
+      <v-text-field
+        v-model="mobile"
+        label="Celular"
+      />
+    </v-col>
+    <v-col
+      cols="12"
+      sm="12"
+      md="12"
+    >
+      <v-text-field
+        v-model="observation"
+        label="Observaciones"
+      />
+    </v-col>
+    <v-col
+      cols="12"
+      sm="4"
     >
       <v-select
-        v-model="state"
+        v-model="state_id"
         :items="states"
         label="Estados"
         item-text="nom_agee"
@@ -55,25 +126,32 @@
     </v-col>
     <v-col
       cols="12"
-      sm="6"
+      sm="4"
     >
       <v-select
+        v-model="municipio_id"
         :items="municipios"
         label="Municipios"
         item-text="nom_agem"
         item-value="cve_agem"
         dense
         outlined
+        @change="loadLocations"
       ></v-select>
     </v-col>
     <v-col
       cols="12"
-      sm="6"
+      sm="4"
     >
-      <v-text-field
-        v-model="phone"
-        label="Telefono"
-      />
+      <v-select
+        v-model="location_id"
+        :items="locations"
+        label="Localidades"
+        item-text="nom_loc"
+        item-value="cve_loc"
+        dense
+        outlined
+      ></v-select>
     </v-col>
   </v-row>
 </template>
@@ -90,19 +168,31 @@
     computed: {
       ...mapFields(companyStore.name, [
         'current_item.name',
+        'current_item.ftr',
         'current_item.email',
-        'current_item.address',
         'current_item.phone',
-        'current_item.cp',
+        'current_item.mobile',
+        'current_item.postal_code',
+        'current_item.address',
+        'current_item.exterior_number',
+        'current_item.interior_number',
+        'current_item.suburb',
+        'current_item.location_id',
+        'current_item.municipio_id',
+        'current_item.state_id',
+        'current_item.country_id',
+        'current_item.observation',
         'current_item.state',
         'states',
         'municipios',
+        'locations',
       ]),
     },
     methods: {
       ...mapActions(companyStore.name, [
         'loadStates',
         'loadMunicipio',
+        'loadLocations',
       ]),
     },
   }

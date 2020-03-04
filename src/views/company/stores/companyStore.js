@@ -4,35 +4,37 @@ import companyDeleteApi from 'companyModule/api/companyDeleteApi'
 import companyPatchApi from 'companyModule/api/companyPatchApi'
 import catStateInegiApi from 'companyModule/api/catStateInegiApi'
 import catMunicipioInegiApi from 'companyModule/api/catMunicipioInegiApi'
+import catLocationInegiApi from 'companyModule/api/catLocationInegiApi'
 
 import { getField, updateField } from 'vuex-map-fields'
 function initItem () {
   return {
-    uuid: null,
+    id: null,
     name: null,
-    address: null,
-    cp: null,
-    state: null,
-    phone: null,
+    ftr: null,
     email: null,
+    phone: null,
+    mobile: null,
+    postal_code: null,
+    address: null,
+    exterior_number: null,
+    interior_number: null,
+    suburb: null,
+    location_id: null,
+    municipio_id: null,
+    state_id: null,
+    country_id: null,
+    observation: null,
   }
 }
 function initState () {
   return {
     loading: true,
     headers: [
-      {
-        text: 'Nombre',
-        align: 'left',
-        sortable: false,
-        value: 'name',
-      },
-      { text: 'Direccion', value: 'address' },
-      { text: 'Codigo postal', value: 'cp' },
-      { text: 'Estad', value: 'state' },
-      { text: 'Telefono', value: 'phone' },
-      { text: 'Codigo postal', value: 'cp' },
-      { text: 'Accciones', value: 'action' },
+      { text: 'Razón Social', align: 'left', sortable: false, value: 'name', width: '35%' },
+      { text: 'RFC', value: 'ftr', width: '15%' },
+      { text: 'Domicilio', value: 'address', width: '35%' },
+      { text: '', value: 'action', width: '15 %' },
     ],
     items: [],
     current_index: -1,
@@ -40,8 +42,8 @@ function initState () {
     dialog: false,
     states: [],
     municipios: [],
-    localidades: [],
-
+    locations: [],
+    cveAgee: null,
   }
 }
 
@@ -78,6 +80,12 @@ const mutations = {
   loadMunicipios (state, payload) {
     state.municipios = payload
   },
+  loadLocations (state, payload) {
+    state.locations = payload
+  },
+  setStateID (state, id) {
+    state.cveAgee = id
+   },
 }
 const getters = {
    getField,
@@ -90,11 +98,12 @@ const actions = {
     commit('setLoading', false)
   },
   async deleteItem ({ commit }, item) {
-    await companyDeleteApi(item.uuid)
+    await companyDeleteApi(item.id)
     const response = await companyGetApi()
     commit('setItems', response.data.payload)
   },
   editItem ({ commit }, item) {
+    /* dispatch('loadMunicipio', item.state_id) */
     commit('setCurrentItem', item)
     commit('showModal', true)
   },
@@ -112,7 +121,13 @@ const actions = {
   async loadMunicipio ({ state, commit }, cveAgee) {
     const response = await catMunicipioInegiApi(cveAgee)
     console.log(response)
+    commit('setStateID', cveAgee)
     commit('loadMunicipios', response.data.datos)
+  },
+  async loadLocations ({ state, commit }, cveAgem) {
+    const response = await catLocationInegiApi(state.cveAgee, cveAgem)
+    console.log(response)
+    commit('loadLocations', response.data.datos)
   },
 }
 
