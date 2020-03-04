@@ -25,5 +25,6 @@ module.exports = {
       .set('companyModule', resolve('src/views/company'))
       .set('userModule', resolve('src/views/user'))
       .set('stageModule', resolve('src/views/stage'))
+      .set('projectModule', resolve('src/views/project'))
   }
 }

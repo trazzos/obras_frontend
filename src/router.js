@@ -59,6 +59,14 @@ export default new Router({
             auth: true,
           },
         },
+        {
+          name: 'Proyectos',
+          path: 'project',
+          component: () => import('projectModule/components/Index'),
+          meta: {
+            auth: true,
+          },
+        },
       ],
     },
     {

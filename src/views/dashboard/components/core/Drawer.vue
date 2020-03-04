@@ -116,6 +116,11 @@
               to: 'task',
             }],
         },
+        {
+          icon: 'mdi-domain',
+          title: 'Proyectos',
+          to: 'project',
+        },
       ],
     }),
 
