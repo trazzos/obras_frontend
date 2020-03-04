@@ -1,8 +1,8 @@
 import axios from '@/axios'
 export default async function stageGetApi () {
   try {
-    return await axios.get('/company', { params: { uuid: 'test' } })
+    return await axios.get('/stage', { params: { id: 'test' } })
   } catch (error) {
-    throw new Error(error)
+     return error.response
   }
 }

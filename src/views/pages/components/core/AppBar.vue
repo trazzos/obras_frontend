@@ -17,7 +17,7 @@
         v-for="(item, i) in items"
         :key="i"
         :to="item.to"
-        class = "v-btn--text white--text bold"
+        class="v-btn--text white--text bold"
         min-height="48"
         min-width="40"
         text

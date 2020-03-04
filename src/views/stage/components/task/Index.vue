@@ -3,91 +3,67 @@
     id="data-tables"
     tag="section"
   >
-    <base-material-card
-      color="primary"
-      title="Etapas"
-      inline
-      class="px-5 py-3"
-    >
+      <v-toolbar
+        flat
+        height="20"
+      >
+        <v-spacer></v-spacer>
+        <v-btn
+          color="primary"
+          dark
+          class="mb-2"
+          @click="addTask"
+        >Agregar</v-btn>
+      </v-toolbar>
       <v-data-table
-        :headers="headers"
-        :items="stages"
+        :headers="headersTask"
+        :items="tasks"
         :loading="loading"
         :search.sync="search"
         :sort-by="['name']"
         :sort-desc="[false, true]"
         multi-sort
+        class="mx-0 my-4 elevation-1"
       >
-        <template v-slot:top>
-          <custom-modal-stage />
-        </template>
         <template v-slot:item.action="{ item }">
           <custom-action-row
             :row ="item"
             :actions="actions"
-            @editItem="editStage"
-            @viewListTask="viewListTask"
-            @deleteItem="deleteStage"
+            @editItem="editTask"
+            @deleteItem="deleteTask"
           />
         </template>
       </v-data-table>
-    </base-material-card>
-    <custom-modal-task-stage></custom-modal-task-stage>
-    <custom-modal-task></custom-modal-task>
   </v-container>
 </template>
 
 <script>
 
   import { mapState, mapActions } from 'vuex'
-
   import stageStore from 'stageModule/stores/stageStore'
-  import CustomModalStage from 'stageModule/components/CustomModalStage'
-  import CustomModalTask from 'stageModule/components/task/CustomModalTask'
-  import CustomModalTaskStage from 'stageModule/components/CustomModalTaskStage'
   import CustomActionRow from 'globalModule/components/CustomActionRow'
   export default {
     name: 'DashboardDataTables',
     components: {
-      CustomModalStage,
       CustomActionRow,
-      CustomModalTaskStage,
-      CustomModalTask,
-    },
-    beforeCreate () {
-      if (!this.$store.state.stageStore) {
-        this.$store.registerModule(stageStore.name, stageStore)
-      }
-    },
-    mounted () {
-      this.stageGetApi()
     },
     methods: {
       ...mapActions(stageStore.name, [
-        'stageGetApi',
-        'deleteStage',
-        'editStage',
-        'viewListTask',
+        'deleteTask',
+        'editTask',
+        'addTask',
       ]),
     },
     computed: {
       ...mapState(stageStore.name, [
         'loading',
-        'headers',
-        'stages',
+        'headersTask',
+        'tasks',
       ]),
     },
     data: () => ({
       search: undefined,
       actions: [
-        {
-          icon: 'mdi-file-tree',
-          title: 'Ver tareas',
-          color: 'info',
-          handler: 'viewListTask',
-          isIcon: false,
-          isFab: true,
-        },
         {
           icon: 'mdi-pencil',
           title: 'Editar',

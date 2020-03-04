@@ -42,15 +42,13 @@
           v-if="item.children"
           :key="`group-${i}`"
           :item="item"
-        >
-        </base-item-group>
+        />
 
         <base-item
           v-else
           :key="`item-${i}`"
           :item="item"
-        >
-        </base-item>
+        />
       </template>
 
       <!-- Style cascading bug  -->
@@ -110,11 +108,7 @@
               title: 'Etapas',
               to: 'stage',
             },
-            {
-              name: 'Tareas',
-              title: 'Tareas',
-              to: 'task',
-            }],
+          ],
         },
         {
           icon: 'mdi-domain',
