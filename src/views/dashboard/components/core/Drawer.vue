@@ -110,6 +110,11 @@
             },
           ],
         },
+        {
+          icon: 'mdi-domain',
+          title: 'Proyectos',
+          to: 'project',
+        },
       ],
     }),
 
