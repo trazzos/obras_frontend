@@ -36,26 +36,32 @@
     >
       <v-select
         v-model="role"
-        :items="states"
+        :items="roles"
         label="Rol"
-        item-text="nom_agee"
-        item-value="cve_agee"
+        item-text="role_value"
+        item-value="role_value"
         dense
         outlined
-        @change="loadMunicipio"
-      ></v-select>
+      />
     </v-col>
   </v-row>
 </template>
 
 <script>
   import userStore from 'userModule/stores/userStore'
-  import { mapActions } from 'vuex'
   import { mapFields } from 'vuex-map-fields'
   export default {
     name: 'FormUser',
-    mounted () {
-      this.loadStates()
+    data: function () {
+      return {
+        roles: [{
+          role_value: 'admin',
+        }, {
+          role_value: 'manager',
+        }, {
+          role_value: 'user',
+        }],
+      }
     },
     computed: {
       ...mapFields(userStore.name, [
@@ -63,14 +69,6 @@
         'current_item.email',
         'current_item.password',
         'current_item.role',
-        'states',
-        'municipios',
-      ]),
-    },
-    methods: {
-      ...mapActions(userStore.name, [
-        'loadStates',
-        'loadMunicipio',
       ]),
     },
   }
