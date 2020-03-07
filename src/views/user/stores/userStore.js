@@ -2,6 +2,8 @@ import userGetApi from 'userModule/api/userGetApi'
 import userCreateApi from 'userModule/api/userCreateApi'
 import userDeleteApi from 'userModule/api/userDeleteApi'
 import userPatchApi from 'userModule/api/userPatchApi'
+import catStateInegiApi from 'userModule/api/catStateInegiApi'
+import catMunicipioInegiApi from 'userModule/api/catMunicipioInegiApi'
 
 import { getField, updateField } from 'vuex-map-fields'
 function initCredentials () {
@@ -41,6 +43,8 @@ function initState () {
     current_item: initItem(),
     dialog: false,
     states: [],
+    municipios: [],
+    localidades: [],
   }
 }
 
@@ -63,7 +67,7 @@ const mutations = {
     state.current_item = initItem()
   },
   setCurrentItem (state, item) {
-    state.current_index = state.items.data.indexOf(item)
+    state.current_index = state.items.indexOf(item)
     state.current_item = Object.assign({}, item)
   },
   showModal (state, status) {
@@ -74,6 +78,12 @@ const mutations = {
     state.dialog = status
   },
   updateField,
+  loadStates (state, payload) {
+    state.states = payload
+   },
+   loadMunicipios (state, payload) {
+     state.municipios = payload
+   },
 }
 const getters = {
   getField,
@@ -118,6 +128,15 @@ const actions = {
     commit('showModal', false)
     commit('resetCurrentItem')
     dispatch('userGetApi')
+  },
+  async loadStates ({ state, commit }) {
+    const response = await catStateInegiApi()
+    commit('loadStates', response.data.datos)
+  },
+  async loadMunicipio ({ state, commit }, cveAgee) {
+    const response = await catMunicipioInegiApi(cveAgee)
+    console.log(response)
+    commit('loadMunicipios', response.data.datos)
   },
 }
 
