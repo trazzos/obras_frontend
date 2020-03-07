@@ -11,7 +11,7 @@
     >
       <v-data-table
         :headers="headers"
-        :items="items"
+        :items="items.data"
         :loading="loading"
         :search.sync="search"
         :sort-by="['name', 'office']"
@@ -21,7 +21,7 @@
         <template v-slot:top>
           <modal-user />
         </template>
-        <template v-slot:item.action = "{ item }">
+        <template v-slot:item.action="{ item }">
           <v-btn
             color="success"
             title="Editar"
@@ -36,9 +36,9 @@
           <v-btn
             color="red"
             title="Eliminar"
-            @click="deleteItem(item)"
             x-small
             fab
+            @click="deleteItem(item)"
           >
             <v-icon>
               mdi-delete
