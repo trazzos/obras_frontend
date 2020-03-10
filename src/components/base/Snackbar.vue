@@ -11,7 +11,7 @@
         dark
         text
         @click="snackbar = false"
-      ></v-btn>
+      />
     </base-material-snackbar>
   </v-container>
 </template>

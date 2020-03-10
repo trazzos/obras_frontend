@@ -3,37 +3,39 @@
     id="data-tables"
     tag="section"
   >
-      <v-toolbar
-        flat
-        height="20"
+    <v-toolbar
+      flat
+      height="20"
+    >
+      <v-spacer />
+      <v-btn
+        color="primary"
+        dark
+        class="mb-2"
+        @click="addTask"
       >
-        <v-spacer></v-spacer>
-        <v-btn
-          color="primary"
-          dark
-          class="mb-2"
-          @click="addTask"
-        >Agregar</v-btn>
-      </v-toolbar>
-      <v-data-table
-        :headers="headersTask"
-        :items="tasks"
-        :loading="loading"
-        :search.sync="search"
-        :sort-by="['name']"
-        :sort-desc="[false, true]"
-        multi-sort
-        class="mx-0 my-4 elevation-1"
-      >
-        <template v-slot:item.action="{ item }">
-          <custom-action-row
-            :row ="item"
-            :actions="actions"
-            @editItem="editTask"
-            @deleteItem="deleteTask"
-          />
-        </template>
-      </v-data-table>
+        Agregar
+      </v-btn>
+    </v-toolbar>
+    <v-data-table
+      :headers="headersTask"
+      :items="tasks"
+      :loading="loading"
+      :search.sync="search"
+      :sort-by="['name']"
+      :sort-desc="[false, true]"
+      multi-sort
+      class="mx-0 my-4 elevation-1"
+    >
+      <template v-slot:item.action="{ item }">
+        <custom-action-row
+          :row="item"
+          :actions="actions"
+          @editItem="editTask"
+          @deleteItem="deleteTask"
+        />
+      </template>
+    </v-data-table>
   </v-container>
 </template>
 
@@ -46,20 +48,6 @@
     name: 'DashboardDataTables',
     components: {
       CustomActionRow,
-    },
-    methods: {
-      ...mapActions(stageStore.name, [
-        'deleteTask',
-        'editTask',
-        'addTask',
-      ]),
-    },
-    computed: {
-      ...mapState(stageStore.name, [
-        'loading',
-        'headersTask',
-        'tasks',
-      ]),
     },
     data: () => ({
       search: undefined,
@@ -82,5 +70,19 @@
         },
       ],
     }),
+    computed: {
+      ...mapState(stageStore.name, [
+        'loading',
+        'headersTask',
+        'tasks',
+      ]),
+    },
+    methods: {
+      ...mapActions(stageStore.name, [
+        'deleteTask',
+        'editTask',
+        'addTask',
+      ]),
+    },
   }
 </script>

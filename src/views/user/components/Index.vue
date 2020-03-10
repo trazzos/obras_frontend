@@ -21,7 +21,7 @@
         <template v-slot:top>
           <modal-user />
         </template>
-        <template v-slot:item.action = "{ item }">
+        <template v-slot:item.action="{ item }">
           <v-btn
             color="success"
             title="Editar"
@@ -36,9 +36,9 @@
           <v-btn
             color="red"
             title="Eliminar"
-            @click="deleteItem(item)"
             x-small
             fab
+            @click="deleteItem(item)"
           >
             <v-icon>
               mdi-delete
@@ -61,6 +61,16 @@
     components: {
       modalUser,
     },
+    data: () => ({
+      search: undefined,
+    }),
+    computed: {
+      ...mapState(userStore.name, [
+        'loading',
+        'headers',
+        'items',
+      ]),
+    },
     beforeCreate () {
       if (!this.$store.state.userStore) {
         this.$store.registerModule(userStore.name, userStore)
@@ -76,15 +86,5 @@
         'editItem',
       ]),
     },
-    computed: {
-      ...mapState(userStore.name, [
-        'loading',
-        'headers',
-        'items',
-      ]),
-    },
-    data: () => ({
-      search: undefined,
-    }),
   }
 </script>

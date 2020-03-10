@@ -1,5 +1,5 @@
 <template>
-<v-toolbar
+  <v-toolbar
     flat
   >
     <v-spacer />
@@ -15,25 +15,28 @@
           dark
           class="mb-2"
           v-on="on"
-        >Agregar</v-btn>
+        >
+          Agregar
+        </v-btn>
       </template>
       <v-card>
         <v-overlay
           :absolute="true"
           :opacity="0.15"
           :value="loading_modal_stage"
-          :zIndex="5"
+          :z-index="5"
         >
           <v-progress-circular
             indeterminate
             size="64"
             color="primary"
-          ></v-progress-circular>
+          />
         </v-overlay>
         <v-card-title
           class="headline grey lighten-2"
           primary-title
-        >{{ titleForm }}
+        >
+          {{ titleForm }}
         </v-card-title>
         <v-card-text>
           <v-container>
@@ -47,13 +50,17 @@
             color="primary"
             class="v-btn--text white--text font-weight-bold"
             @click="showModal({ modal:'modal_stage', status: false})"
-          >Cancelar</v-btn>
+          >
+            Cancelar
+          </v-btn>
           <v-btn
             outlined
             color="primary"
             class="v-btn--text white--text font-weight-bold"
             @click="saveStage"
-          >Guardar</v-btn>
+          >
+            Guardar
+          </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -65,7 +72,7 @@
   import { mapFields } from 'vuex-map-fields'
   import { mapActions, mapMutations } from 'vuex'
   export default {
-    name: 'custom-modal-stage',
+    name: 'CustomModalStage',
     components: {
       CustomFormStage,
     },
@@ -79,14 +86,14 @@
         return (this.current_stage_index === null) ? 'Agregar etapa' : 'Editar etapa'
       },
     },
-    methods: {
-      ...mapActions(stageStore.name, ['saveStage']),
-      ...mapMutations(stageStore.name, ['showModal', 'resetCurrentStage']),
-    },
     watch: {
       modal_stage (val) {
         !val && this.resetCurrentStage()
       },
+    },
+    methods: {
+      ...mapActions(stageStore.name, ['saveStage']),
+      ...mapMutations(stageStore.name, ['showModal', 'resetCurrentStage']),
     },
   }
 </script>

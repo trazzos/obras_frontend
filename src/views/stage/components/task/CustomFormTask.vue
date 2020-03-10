@@ -29,8 +29,8 @@
       md="12"
     >
       <v-textarea
-        outlined
         v-model="comment"
+        outlined
         label="Comentarios"
         rows="2"
       />
@@ -43,8 +43,7 @@
       <v-switch
         v-model="create_pdf"
         label="Crear pdf"
-      >
-      </v-switch>
+      />
     </v-col>
   </v-row>
 </template>
@@ -53,7 +52,7 @@
   import stageStore from 'stageModule/stores/stageStore'
   import { mapFields } from 'vuex-map-fields'
   export default {
-    name: 'c-form-task',
+    name: 'CFormTask',
     computed: {
       ...mapFields(stageStore.name, [
         'current_task.name',
