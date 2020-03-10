@@ -12,22 +12,26 @@
           :absolute="true"
           :opacity="0.15"
           :value="loading_modal_task"
-          :zIndex="5"
+          :z-index="5"
         >
           <v-progress-circular
             indeterminate
             size="64"
             color="primary"
-          ></v-progress-circular>
+          />
         </v-overlay>
         <v-toolbar
           color="primary"
           dark
         >
-          <v-toolbar-title class="float-left"> <v-btn icon> <v-icon>mdi-file-tree</v-icon></v-btn>{{ titleForm }}</v-toolbar-title>
+          <v-toolbar-title class="float-left">
+            <v-btn icon>
+              <v-icon>mdi-file-tree</v-icon>
+            </v-btn>{{ titleForm }}
+          </v-toolbar-title>
         </v-toolbar>
         <v-card-text>
-          <custom-form-task></custom-form-task>
+          <custom-form-task />
         </v-card-text>
         <v-divider />
         <v-card-actions>
@@ -49,29 +53,10 @@
   import { mapActions, mapMutations } from 'vuex'
 
   export default {
-    name: 'custom-modal-task',
+    name: 'CustomModalTask',
     components: {
       CustomFormTask,
       CustomActionModal,
-    },
-    computed: {
-      ...mapFields(stageStore.name, [
-        'modal_task',
-        'current_task_index',
-        'loading_modal_task',
-      ]),
-      titleForm () {
-        return (this.current_task_index === null) ? 'Agregar tarea' : 'Editar tarea'
-      },
-    },
-    methods: {
-      ...mapMutations(stageStore.name, [
-        'showModal',
-        'resetCurrentTask',
-      ]),
-      ...mapActions(stageStore.name, [
-        'saveTask',
-      ]),
     },
     data: () => ({
       actions: [
@@ -87,10 +72,29 @@
         },
       ],
     }),
+    computed: {
+      ...mapFields(stageStore.name, [
+        'modal_task',
+        'current_task_index',
+        'loading_modal_task',
+      ]),
+      titleForm () {
+        return (this.current_task_index === null) ? 'Agregar tarea' : 'Editar tarea'
+      },
+    },
     watch: {
       modal_task (val) {
         !val && this.resetCurrentTask()
       },
+    },
+    methods: {
+      ...mapMutations(stageStore.name, [
+        'showModal',
+        'resetCurrentTask',
+      ]),
+      ...mapActions(stageStore.name, [
+        'saveTask',
+      ]),
     },
   }
 </script>

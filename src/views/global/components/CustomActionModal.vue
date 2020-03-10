@@ -2,25 +2,32 @@
   <div class="d-flex">
     <div class="d-inline-flex">
       <v-btn
-        outlined
         v-for="(action, i) in actions"
+        :key="i"
+        outlined
         :color="action.color"
         :title="action.title"
-        :icon ="action.isIcon"
-        :fab ="action.isFab"
-        @click="$emit(action.handler)"
+        :icon="action.isIcon"
+        :fab="action.isFab"
         class="mx-1"
-        :key="i"
-      >{{ action.title }}</v-btn>
+        @click="$emit(action.handler)"
+      >
+        {{ action.title }}
+      </v-btn>
     </div>
   </div>
 </template>
 
 <script>
   export default {
-    name: 'custom-action-modal',
+    name: 'CustomActionModal',
     props: {
-      actions: Array,
+      actions: {
+        type: Array,
+        default: function () {
+          return []
+        },
+      },
     },
   }
 </script>

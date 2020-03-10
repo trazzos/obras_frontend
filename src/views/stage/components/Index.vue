@@ -23,7 +23,7 @@
         </template>
         <template v-slot:item.action="{ item }">
           <custom-action-row
-            :row ="item"
+            :row="item"
             :actions="actions"
             @editItem="editStage"
             @viewListTask="viewListTask"
@@ -32,8 +32,8 @@
         </template>
       </v-data-table>
     </base-material-card>
-    <custom-modal-task-stage></custom-modal-task-stage>
-    <custom-modal-task></custom-modal-task>
+    <custom-modal-task-stage />
+    <custom-modal-task />
   </v-container>
 </template>
 
@@ -53,29 +53,6 @@
       CustomActionRow,
       CustomModalTaskStage,
       CustomModalTask,
-    },
-    beforeCreate () {
-      if (!this.$store.state.stageStore) {
-        this.$store.registerModule(stageStore.name, stageStore)
-      }
-    },
-    mounted () {
-      this.stageGetApi()
-    },
-    methods: {
-      ...mapActions(stageStore.name, [
-        'stageGetApi',
-        'deleteStage',
-        'editStage',
-        'viewListTask',
-      ]),
-    },
-    computed: {
-      ...mapState(stageStore.name, [
-        'loading',
-        'headers',
-        'stages',
-      ]),
     },
     data: () => ({
       search: undefined,
@@ -106,5 +83,28 @@
         },
       ],
     }),
+    computed: {
+      ...mapState(stageStore.name, [
+        'loading',
+        'headers',
+        'stages',
+      ]),
+    },
+    mounted () {
+      this.stageGetApi()
+    },
+    beforeCreate () {
+      if (!this.$store.state.stageStore) {
+        this.$store.registerModule(stageStore.name, stageStore)
+      }
+    },
+    methods: {
+      ...mapActions(stageStore.name, [
+        'stageGetApi',
+        'deleteStage',
+        'editStage',
+        'viewListTask',
+      ]),
+    },
   }
 </script>

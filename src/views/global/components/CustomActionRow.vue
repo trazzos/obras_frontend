@@ -3,17 +3,18 @@
     <div class="d-inline-flex">
       <v-btn
         v-for="(action, i) in actions"
+        :key="i"
         :color="action.color"
         :title="action.title"
-        :icon ="action.isIcon"
-        :fab ="action.isFab"
+        :icon="action.isIcon"
+        :fab="action.isFab"
         x-small
-        @click="$emit(action.handler,row)"
         class="mx-1"
-        :key="i"
-      > <v-icon dark>
-        {{ action.icon }}
-      </v-icon>
+        @click="$emit(action.handler,row)"
+      >
+        <v-icon dark>
+          {{ action.icon }}
+        </v-icon>
       </v-btn>
     </div>
   </div>
@@ -21,10 +22,24 @@
 
 <script>
   export default {
-    name: 'custom-action-row',
+    name: 'CustomActionRow',
     props: {
-      actions: Array,
-      row: Object,
+      firstName: {
+        type: String,
+        default: 'Unknown person',
+      },
+      actions: {
+        type: Array,
+        default: function () {
+          return []
+        },
+      },
+      row: {
+        type: Object,
+        default: function () {
+          return {}
+        },
+      },
     },
   }
 </script>

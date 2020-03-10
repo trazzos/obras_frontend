@@ -16,17 +16,19 @@
           color="primary"
         >
           <v-btn
-           icon
-           dark
-           @click="showModal({ modal:'modal_task_stage', status:false })"
+            icon
+            dark
+            @click="showModal({ modal:'modal_task_stage', status:false })"
           >
-          <v-icon>mdi-close</v-icon>
+            <v-icon>mdi-close</v-icon>
           </v-btn>
-          <v-toolbar-title class="white--text font-weight-bold">{{ titleForm }}</v-toolbar-title>
-          <v-spacer></v-spacer>
+          <v-toolbar-title class="white--text font-weight-bold">
+            {{ titleForm }}
+          </v-toolbar-title>
+          <v-spacer />
         </v-toolbar>
         <v-card-text>
-          <task></task>
+          <task />
         </v-card-text>
       </v-card>
     </v-dialog>
@@ -39,7 +41,7 @@
   import { mapMutations } from 'vuex'
 
   export default {
-    name: 'custom-modal-task-stage',
+    name: 'CustomModalTaskStage',
     components: {
       task,
     },
@@ -52,17 +54,17 @@
         return 'Lista de tareas'
       },
     },
-    methods: {
-      ...mapMutations(stageStore.name, [
-        'showModal',
-        'resetCurrentStage',
-        'setTasks']),
-    },
     watch: {
       modal_task_stage (val) {
         !val && this.resetCurrentStage()
         !val && this.setTasks([])
       },
+    },
+    methods: {
+      ...mapMutations(stageStore.name, [
+        'showModal',
+        'resetCurrentStage',
+        'setTasks']),
     },
   }
 </script>

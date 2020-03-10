@@ -1,5 +1,5 @@
 <template>
-<v-toolbar
+  <v-toolbar
     flat
   >
     <v-spacer />
@@ -13,13 +13,16 @@
           dark
           class="mb-2"
           v-on="on"
-        >Agregar</v-btn>
+        >
+          Agregar
+        </v-btn>
       </template>
       <v-card>
         <v-card-title
           class="headline grey lighten-2"
           primary-title
-        >{{ titleForm }}
+        >
+          {{ titleForm }}
         </v-card-title>
         <v-card-text>
           <v-container>
@@ -27,17 +30,21 @@
           </v-container>
         </v-card-text>
         <v-card-actions>
-          <v-spacer></v-spacer>
+          <v-spacer />
           <v-btn
             color="blue darken-1"
             text
             @click="showModal(false)"
-          >Cancel</v-btn>
+          >
+            Cancel
+          </v-btn>
           <v-btn
             color="blue darken-1"
             text
             @click="saveUser"
-          >Save</v-btn>
+          >
+            Save
+          </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -49,7 +56,7 @@
   import { mapFields } from 'vuex-map-fields'
   import { mapActions, mapMutations } from 'vuex'
   export default {
-    name: 'modalUser',
+    name: 'ModalUser',
     components: {
       formUser,
     },

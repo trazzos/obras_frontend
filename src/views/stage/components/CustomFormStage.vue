@@ -6,8 +6,8 @@
       md="12"
     >
       <v-text-field
-        outlined
         v-model="name"
+        outlined
         label="Nombre"
       />
     </v-col>
@@ -18,7 +18,7 @@
   import stageStore from 'stageModule/stores/stageStore'
   import { mapFields } from 'vuex-map-fields'
   export default {
-    name: 'c-stage-form',
+    name: 'CStageForm',
     computed: {
       ...mapFields(stageStore.name, [
         'current_stage.name',
