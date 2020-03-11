@@ -45,10 +45,11 @@ function initState () {
     states: [],
     municipios: [],
     localidades: [],
+    // TODO I think this should be a global module
     datatable_options: {
       descending: true,
       page: 1,
-      itemsPerPage: 5,
+      itemsPerPage: 2,
       totalItems: 0,
       // sortBy: 'fat',
     },
