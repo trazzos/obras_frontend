@@ -13,6 +13,12 @@
         :headers="headers"
         :items="items"
         :loading="loading"
+        :options.sync="datatable_options"
+        :server-items-length="datatable_options.totalItems"
+        :footer-props="{
+          showFirstLastPage: true,
+          itemsPerPageOptions: [datatable_options.itemsPerPage],
+        }"
         :search.sync="search"
         :sort-by="['name', 'office']"
         :sort-desc="[false, true]"
@@ -53,6 +59,7 @@
 <script>
 
   import { mapState, mapActions } from 'vuex'
+  import { mapFields } from 'vuex-map-fields'
 
   import userStore from 'userModule/stores/userStore'
   import modalUser from 'userModule/components/ModalUser'
@@ -69,7 +76,19 @@
         'loading',
         'headers',
         'items',
+        'datatable_options',
       ]),
+      ...mapFields(userStore.name, [
+        'datatable_options',
+      ]),
+    },
+    watch: {
+      datatable_options: {
+        handler () {
+          this.userGetApi(this.datatable_options.page)
+        },
+        deep: true,
+      },
     },
     beforeCreate () {
       if (!this.$store.state.userStore) {
@@ -77,7 +96,7 @@
       }
     },
     mounted () {
-      this.userGetApi()
+      // this.userGetApi(1)
     },
     methods: {
       ...mapActions(userStore.name, [

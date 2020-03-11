@@ -45,6 +45,13 @@ function initState () {
     states: [],
     municipios: [],
     localidades: [],
+    datatable_options: {
+      descending: true,
+      page: 1,
+      itemsPerPage: 5,
+      totalItems: 0,
+      // sortBy: 'fat',
+    },
   }
 }
 
@@ -56,11 +63,14 @@ const mutations = {
   setLoading (state, status) {
     state.loading = status
   },
+  setTotalItems (state, total) {
+    state.datatable_options.totalItems = total
+  },
   setButtonLoading (state, status) {
     state.credentials.button_loading = status
   },
   setItems (state, data) {
-    state.items = data
+    state.items = data.data
   },
   resetCurrentItem (state) {
     state.current_index = -1
@@ -108,8 +118,10 @@ const actions = {
       commit('setButtonLoading', false)
     })
   },
-  async userGetApi ({ state, commit }) {
-    const response = await userGetApi()
+  async userGetApi ({ state, commit }, page) {
+    commit('setLoading', true)
+    const response = await userGetApi(page)
+    commit('setTotalItems', response.data.payload.total)
     commit('setItems', response.data.payload)
     commit('setLoading', false)
   },

@@ -1,7 +1,15 @@
 import axios from '@/axios'
-export default async function userGetApi () {
+// import userStore from 'userModule/stores/userStore'
+export default async function userGetApi (page) {
   try {
-    return await axios.get('/user', { params: { 0: '1', 1: '2', 2: '3', 3: '4', 4: '5', 5: '6', 6: '7', 7: '8', 8: '9', 9: '10', 10: '11' } })
+    console.log(page)
+    // console.log(userStore.state.pagination)
+    return await axios.get('/user', {
+      params: {
+        page: page,
+        per_page: 2,
+      },
+    })
   } catch (error) {
     throw new Error(error)
   }
