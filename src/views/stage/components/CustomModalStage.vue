@@ -1,25 +1,18 @@
 <template>
-  <v-toolbar
-    flat
-  >
-    <v-spacer />
     <v-dialog
       v-model="modal_stage"
       max-width="500px"
       hide-overlay
       persistent
     >
-      <template v-slot:activator="{ on }">
-        <v-btn
-          color="primary"
-          dark
-          class="mb-2"
-          v-on="on"
-        >
-          Agregar
-        </v-btn>
-      </template>
       <v-card>
+        <v-toolbar
+          dense
+          max-height="60"
+          color="primary"
+        >
+          <v-toolbar-title class="white--text font-weight-bold">{{ titleForm }}</v-toolbar-title>
+        </v-toolbar>
         <v-overlay
           :absolute="true"
           :opacity="0.15"
@@ -32,12 +25,6 @@
             color="primary"
           />
         </v-overlay>
-        <v-card-title
-          class="headline grey lighten-2"
-          primary-title
-        >
-          {{ titleForm }}
-        </v-card-title>
         <v-card-text>
           <v-container>
             <custom-form-stage />
@@ -64,7 +51,6 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-  </v-toolbar>
 </template>
 <script>
   import CustomFormStage from 'stageModule/components/CustomFormStage'
