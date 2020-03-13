@@ -111,12 +111,10 @@ const actions = {
       commit('setButtonLoading', false)
     })
   },
-  async userGetApi ({ state, commit }, page) {
-    commit('setLoading', true)
-    const response = await userGetApi(page)
-    commit('userStore/paginationStore/setTotalItems', response.data.payload.total, { root: true })
-    commit('setItems', response.data.payload)
-    commit('setLoading', false)
+  async userGetApi ({ state, commit }, request) {
+    commit('userStore/paginationStore/setLoading', true, { root: true })
+    const response = await userGetApi(request)
+    commit('userStore/paginationStore/init', response.data.payload, { root: true })
   },
   async deleteItem ({ commit }, item) {
     await userDeleteApi(item.id)
@@ -140,7 +138,6 @@ const actions = {
   },
   async loadMunicipio ({ state, commit }, cveAgee) {
     const response = await catMunicipioInegiApi(cveAgee)
-    console.log(response)
     commit('loadMunicipios', response.data.datos)
   },
 }

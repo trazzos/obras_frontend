@@ -22,9 +22,6 @@ const mutations = {
     state.snackbar.text = response.data.message
     state.snackbar.show = true
   },
-  setTotalItems (state, total) {
-    state.datatable_options.totalItems = total
-  },
 }
 
 const getters = {

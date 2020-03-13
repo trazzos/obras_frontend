@@ -58,7 +58,7 @@
 
 <script>
 
-  import { mapState, mapActions } from 'vuex'
+  import { mapState, mapMutations, mapActions } from 'vuex'
   import { mapFields } from 'vuex-map-fields'
 
   import userStore from 'userModule/stores/userStore'
@@ -74,10 +74,13 @@
     }),
     computed: {
       ...mapState(userStore.name, [
-        'loading',
         'headers',
+      ]),
+      ...mapState('userStore/paginationStore', [
+        'datatable_options',
         'items',
-        'paginationModule/datatable_options',
+        'loading',
+        'pagination_request',
       ]),
       ...mapFields('userStore/paginationStore', [
         'datatable_options',
@@ -86,7 +89,8 @@
     watch: {
       datatable_options: {
         handler () {
-          this.userGetApi(this.datatable_options.page)
+          this.setPaginationRequest()
+          this.userGetApi(this.pagination_request)
         },
         deep: true,
       },
@@ -97,6 +101,9 @@
       }
     },
     methods: {
+      ...mapMutations('userStore/paginationStore', [
+        'setPaginationRequest',
+      ]),
       ...mapActions(userStore.name, [
         'userGetApi',
         'deleteItem',

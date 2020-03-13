@@ -5,10 +5,13 @@ function initState () {
     datatable_options: {
       descending: true,
       page: 1,
-      itemsPerPage: 0,
+      itemsPerPage: 5,
       totalItems: 0,
       // sortBy: 'fat',
     },
+    items: [],
+    loading: true,
+    pagination_request: {},
   }
 }
 
@@ -18,8 +21,19 @@ const state = () => {
 
 const mutations = {
   updateField,
-  setTotalItems (state, total) {
-    state.datatable_options.totalItems = total
+  init (state, payload) {
+    state.items = payload.data
+    state.datatable_options.totalItems = payload.total
+    state.loading = false
+  },
+  setLoading (state, status) {
+    state.loading = status
+  },
+  setPaginationRequest (state) {
+    state.pagination_request = {
+      page: state.datatable_options.page,
+      per_page: state.datatable_options.itemsPerPage,
+    }
   },
 }
 

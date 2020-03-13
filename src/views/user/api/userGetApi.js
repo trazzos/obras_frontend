@@ -1,11 +1,8 @@
 import axios from '@/axios'
-export default async function userGetApi (page) {
+export default async function userGetApi (request) {
   try {
     return await axios.get('/user', {
-      params: {
-        page: page,
-        per_page: 2, // TODO send this value and predicates
-      },
+      params: request,
     })
   } catch (error) {
     throw new Error(error)
