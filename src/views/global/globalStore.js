@@ -22,6 +22,9 @@ const mutations = {
     state.snackbar.text = response.data.message
     state.snackbar.show = true
   },
+  setTotalItems (state, total) {
+    state.datatable_options.totalItems = total
+  },
 }
 
 const getters = {
@@ -31,7 +34,7 @@ const getters = {
 const actions = { }
 
 export default {
-  name: 'globalModule',
+  name: 'globalStore',
   namespaced: true,
   state,
   getters,

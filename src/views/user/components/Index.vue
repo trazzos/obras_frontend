@@ -63,6 +63,7 @@
 
   import userStore from 'userModule/stores/userStore'
   import modalUser from 'userModule/components/ModalUser'
+
   export default {
     name: 'DashboardDataTables',
     components: {
@@ -76,9 +77,9 @@
         'loading',
         'headers',
         'items',
-        'datatable_options',
+        'paginationModule/datatable_options',
       ]),
-      ...mapFields(userStore.name, [
+      ...mapFields('userStore/paginationStore', [
         'datatable_options',
       ]),
     },
@@ -94,9 +95,6 @@
       if (!this.$store.state.userStore) {
         this.$store.registerModule(userStore.name, userStore)
       }
-    },
-    mounted () {
-      // this.userGetApi(1)
     },
     methods: {
       ...mapActions(userStore.name, [

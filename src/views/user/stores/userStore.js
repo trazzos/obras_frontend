@@ -4,6 +4,7 @@ import userDeleteApi from 'userModule/api/userDeleteApi'
 import userPatchApi from 'userModule/api/userPatchApi'
 import catStateInegiApi from 'userModule/api/catStateInegiApi'
 import catMunicipioInegiApi from 'userModule/api/catMunicipioInegiApi'
+import paginationStore from 'globalModule/paginationStore'
 
 import { getField, updateField } from 'vuex-map-fields'
 function initCredentials () {
@@ -46,13 +47,6 @@ function initState () {
     municipios: [],
     localidades: [],
     // TODO I think this should be a global module
-    datatable_options: {
-      descending: true,
-      page: 1,
-      itemsPerPage: 2,
-      totalItems: 0,
-      // sortBy: 'fat',
-    },
   }
 }
 
@@ -63,9 +57,6 @@ const state = () => {
 const mutations = {
   setLoading (state, status) {
     state.loading = status
-  },
-  setTotalItems (state, total) {
-    state.datatable_options.totalItems = total
   },
   setButtonLoading (state, status) {
     state.credentials.button_loading = status
@@ -96,6 +87,7 @@ const mutations = {
      state.municipios = payload
    },
 }
+
 const getters = {
   getField,
 }
@@ -114,7 +106,7 @@ const actions = {
       fetchUser: true,
     }).then(function (response) {
     }).catch(function (error) {
-      commit('globalModule/errorSnackbar', error.response, { root: true })
+      commit('globalStore/errorSnackbar', error.response, { root: true })
     }).then(function () {
       commit('setButtonLoading', false)
     })
@@ -122,7 +114,7 @@ const actions = {
   async userGetApi ({ state, commit }, page) {
     commit('setLoading', true)
     const response = await userGetApi(page)
-    commit('setTotalItems', response.data.payload.total)
+    commit('userStore/paginationStore/setTotalItems', response.data.payload.total, { root: true })
     commit('setItems', response.data.payload)
     commit('setLoading', false)
   },
@@ -153,6 +145,10 @@ const actions = {
   },
 }
 
+const modules = {
+  paginationStore,
+}
+
 export default {
   name: 'userStore',
   namespaced: true,
@@ -160,4 +156,5 @@ export default {
   getters,
   actions,
   mutations,
+  modules,
 }

@@ -1,12 +1,12 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import globalModule from '@/modules/globalModule'
+import globalStore from 'globalModule/globalStore'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   modules: {
-    globalModule,
+    globalStore,
   },
   state: {
     barColor: 'rgba(0, 0, 0, .8), rgba(0, 0, 0, .8)',
