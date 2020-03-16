@@ -76,7 +76,7 @@
         'credentials.password',
         'credentials.button_loading',
       ]),
-      ...mapFields('globalModule', [
+      ...mapFields('globalStore', [
         'snackbar.show',
         'snackbar.text',
       ]),

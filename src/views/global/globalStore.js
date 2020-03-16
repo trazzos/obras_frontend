@@ -31,7 +31,7 @@ const getters = {
 const actions = { }
 
 export default {
-  name: 'globalModule',
+  name: 'globalStore',
   namespaced: true,
   state,
   getters,

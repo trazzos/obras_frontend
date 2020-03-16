@@ -22,7 +22,7 @@
   export default {
     name: 'GlobalSnackbar',
     computed: {
-      ...mapFields('globalModule', [
+      ...mapFields('globalStore', [
         'snackbar.show',
         'snackbar.text',
         'snackbar.type',

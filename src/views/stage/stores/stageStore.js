@@ -169,9 +169,9 @@ const actions = {
     if ('payload' in response.data) {
       response.data.payload && commit('removeItemInStages', item)
       commit('resetCurrentTask')
-      commit('globalModule/errorSnackbar', response, { root: true })
+      commit('globalStore/errorSnackbar', response, { root: true })
     } else {
-      commit('globalModule/errorSnackbar', response, { root: true })
+      commit('globalStore/errorSnackbar', response, { root: true })
     }
   },
   async saveStage ({ state, commit, dispatch }) {
@@ -182,10 +182,10 @@ const actions = {
       commit('showModal', { modal: 'modal_stage', status: false })
       commit('resetCurrentTask')
       dispatch('stageGetApi')
-      commit('globalModule/errorSnackbar', response, { root: true })
+      commit('globalStore/errorSnackbar', response, { root: true })
     } else {
       commit('setProgressLoading', { name: 'loading_modal_stage', status: false })
-      commit('globalModule/errorSnackbar', response, { root: true })
+      commit('globalStore/errorSnackbar', response, { root: true })
     }
   },
   /*  task actions */
@@ -205,19 +205,19 @@ const actions = {
       commit('setProgressLoading', { name: 'loading_modal_task', status: false })
       commit('showModal', { modal: 'modal_task', status: false })
       commit('resetCurrentTask')
-      commit('globalModule/errorSnackbar', response, { root: true })
+      commit('globalStore/errorSnackbar', response, { root: true })
     } else {
       commit('setProgressLoading', { name: 'loading_modal_task', status: false })
-      commit('globalModule/errorSnackbar', response, { root: true })
+      commit('globalStore/errorSnackbar', response, { root: true })
     }
   },
   async deleteTask ({ commit }, item) {
     const response = await taskDeleteApi(item.id)
     if ('payload' in response.data) {
       response.data.payload && commit('removeItemInTasks', item)
-      commit('globalModule/errorSnackbar', response, { root: true })
+      commit('globalStore/errorSnackbar', response, { root: true })
     } else {
-      commit('globalModule/errorSnackbar', response, { root: true })
+      commit('globalStore/errorSnackbar', response, { root: true })
     }
   },
   /* cross actions */
