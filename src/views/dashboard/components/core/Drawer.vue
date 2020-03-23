@@ -108,6 +108,11 @@
               title: 'Etapas',
               to: 'stage',
             },
+            {
+              name: 'Acciones',
+              title: 'Acciones',
+              to: 'action',
+            },
           ],
         },
         {

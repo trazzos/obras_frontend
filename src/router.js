@@ -59,6 +59,14 @@ export default new Router({
             auth: true,
           },
         },
+        {
+          name: 'Acciónes',
+          path: 'action',
+          component: () => import('actionModule/components/Index'),
+          meta: {
+            auth: true,
+          },
+        },
       ],
     },
     {
