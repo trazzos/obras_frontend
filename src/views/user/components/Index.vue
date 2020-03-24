@@ -13,6 +13,12 @@
         :headers="headers"
         :items="items"
         :loading="loading"
+        :options.sync="datatable_options"
+        :server-items-length="datatable_options.totalItems"
+        :footer-props="{
+          showFirstLastPage: true,
+          itemsPerPageOptions: [datatable_options.itemsPerPage],
+        }"
         :search.sync="search"
         :sort-by="['name', 'office']"
         :sort-desc="[false, true]"
@@ -52,10 +58,12 @@
 
 <script>
 
-  import { mapState, mapActions } from 'vuex'
+  import { mapState, mapMutations, mapActions } from 'vuex'
+  import { mapFields } from 'vuex-map-fields'
 
   import userStore from 'userModule/stores/userStore'
   import modalUser from 'userModule/components/ModalUser'
+
   export default {
     name: 'DashboardDataTables',
     components: {
@@ -66,20 +74,36 @@
     }),
     computed: {
       ...mapState(userStore.name, [
-        'loading',
         'headers',
-        'items',
       ]),
+      ...mapState('userStore/paginationStore', [
+        'datatable_options',
+        'items',
+        'loading',
+        'pagination_request',
+      ]),
+      ...mapFields('userStore/paginationStore', [
+        'datatable_options',
+      ]),
+    },
+    watch: {
+      datatable_options: {
+        handler () {
+          this.setPaginationRequest()
+          this.userGetApi(this.pagination_request)
+        },
+        deep: true,
+      },
     },
     beforeCreate () {
       if (!this.$store.state.userStore) {
         this.$store.registerModule(userStore.name, userStore)
       }
     },
-    mounted () {
-      this.userGetApi()
-    },
     methods: {
+      ...mapMutations('userStore/paginationStore', [
+        'setPaginationRequest',
+      ]),
       ...mapActions(userStore.name, [
         'userGetApi',
         'deleteItem',

@@ -4,6 +4,7 @@ import userDeleteApi from 'userModule/api/userDeleteApi'
 import userPatchApi from 'userModule/api/userPatchApi'
 import catStateInegiApi from 'userModule/api/catStateInegiApi'
 import catMunicipioInegiApi from 'userModule/api/catMunicipioInegiApi'
+import paginationStore from 'globalModule/paginationStore'
 
 import { getField, updateField } from 'vuex-map-fields'
 function initCredentials () {
@@ -45,6 +46,7 @@ function initState () {
     states: [],
     municipios: [],
     localidades: [],
+    // TODO I think this should be a global module
   }
 }
 
@@ -60,7 +62,7 @@ const mutations = {
     state.credentials.button_loading = status
   },
   setItems (state, data) {
-    state.items = data
+    state.items = data.data
   },
   resetCurrentItem (state) {
     state.current_index = -1
@@ -85,6 +87,7 @@ const mutations = {
      state.municipios = payload
    },
 }
+
 const getters = {
   getField,
 }
@@ -103,15 +106,15 @@ const actions = {
       fetchUser: true,
     }).then(function (response) {
     }).catch(function (error) {
-      commit('globalModule/errorSnackbar', error.response, { root: true })
+      commit('globalStore/errorSnackbar', error.response, { root: true })
     }).then(function () {
       commit('setButtonLoading', false)
     })
   },
-  async userGetApi ({ state, commit }) {
-    const response = await userGetApi()
-    commit('setItems', response.data.payload)
-    commit('setLoading', false)
+  async userGetApi ({ state, commit }, request) {
+    commit('userStore/paginationStore/setLoading', true, { root: true })
+    const response = await userGetApi(request)
+    commit('userStore/paginationStore/init', response.data.payload, { root: true })
   },
   async deleteItem ({ commit }, item) {
     await userDeleteApi(item.id)
@@ -135,9 +138,12 @@ const actions = {
   },
   async loadMunicipio ({ state, commit }, cveAgee) {
     const response = await catMunicipioInegiApi(cveAgee)
-    console.log(response)
     commit('loadMunicipios', response.data.datos)
   },
+}
+
+const modules = {
+  paginationStore,
 }
 
 export default {
@@ -147,4 +153,5 @@ export default {
   getters,
   actions,
   mutations,
+  modules,
 }
