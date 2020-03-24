@@ -255,7 +255,7 @@ const actions = {
       commit('showModal', { modal: 'modal_task', status: false })
       commit('resetCurrentTask')
       commit('resetCurrentStage')
-      commit('globalModule/errorSnackbar', response, { root: true })
+      commit('globalStore/errorSnackbar', response, { root: true })
     } else {
       commit('setProgressLoading', { name: 'loading_modal_task', status: false })
       commit('globalStore/errorSnackbar', response, { root: true })

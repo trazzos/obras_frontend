@@ -4,7 +4,7 @@ import userDeleteApi from 'userModule/api/userDeleteApi'
 import userPatchApi from 'userModule/api/userPatchApi'
 import catStateInegiApi from 'userModule/api/catStateInegiApi'
 import catMunicipioInegiApi from 'userModule/api/catMunicipioInegiApi'
-import paginationStore from 'globalModule/paginationStore'
+import paginationStore from 'globalStore/paginationStore'
 
 import { getField, updateField } from 'vuex-map-fields'
 function initCredentials () {

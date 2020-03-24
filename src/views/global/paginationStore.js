@@ -7,6 +7,7 @@ function initState () {
       page: 1,
       itemsPerPage: 5,
       totalItems: 0,
+      lastPage: 0,
       // sortBy: 'fat',
     },
     items: [],
@@ -24,6 +25,7 @@ const mutations = {
   init (state, payload) {
     state.items = payload.data
     state.datatable_options.totalItems = payload.total
+    state.datatable_options.lastPage = payload.last_page
     state.loading = false
   },
   setLoading (state, status) {

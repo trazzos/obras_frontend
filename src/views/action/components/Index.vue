@@ -26,6 +26,13 @@
         :headers="headers"
         :items="items"
         :loading="loading"
+        :options.sync="datatable_options"
+        :server-items-length="datatable_options.totalItems"
+        :footer-props="{
+          showFirstLastPage: true,
+          itemsPerPageOptions: [datatable_options.itemsPerPage],
+          showCurrentPage: true,
+        }"
         :search.sync="search"
         :sort-by="['name']"
         :sort-desc="[false, true]"
@@ -47,38 +54,54 @@
 
 <script>
 
-  import { mapState, mapActions } from 'vuex'
+  import { mapState, mapActions, mapMutations } from 'vuex'
+  import { mapFields } from 'vuex-map-fields'
 
   import actionStore from 'actionModule/stores/actionStore'
   import CustomModalAction from 'actionModule/components/CustomModalAction'
-  import CustomActionRow from 'globalModule/components/CustomActionRow'
+  import CustomActionRow from 'globalStore/components/CustomActionRow'
   export default {
     name: 'DashboardDataTables',
     components: {
       CustomModalAction,
       CustomActionRow,
     },
+    computed: {
+      ...mapState(actionStore.name, [
+        'headers',
+      ]),
+      ...mapState('actionStore/paginationStore', [
+        'items',
+        'loading',
+        'pagination_request',
+      ]),
+      ...mapFields('actionStore/paginationStore', [
+        'datatable_options',
+      ]),
+    },
+    watch: {
+      datatable_options: {
+        handler () {
+          this.setPaginationRequest()
+          this.actionGetApi(this.pagination_request)
+        },
+        deep: true,
+      },
+    },
     beforeCreate () {
       if (!this.$store.state.actionStore) {
         this.$store.registerModule(actionStore.name, actionStore)
       }
     },
-    mounted () {
-      this.actionGetApi()
-    },
     methods: {
+      ...mapMutations('actionStore/paginationStore', [
+        'setPaginationRequest',
+      ]),
       ...mapActions(actionStore.name, [
         'actionGetApi',
         'deleteAction',
         'editAction',
         'addAction',
-      ]),
-    },
-    computed: {
-      ...mapState(actionStore.name, [
-        'loading',
-        'headers',
-        'items',
       ]),
     },
     data: () => ({

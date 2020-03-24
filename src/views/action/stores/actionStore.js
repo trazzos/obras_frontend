@@ -3,7 +3,8 @@ import actionCreateApi from 'actionModule/api/actionCreateApi'
 import actionDeleteApi from 'actionModule/api/actionDeleteApi'
 import actionPatchApi from 'actionModule/api/actionPatchApi'
 
-import catalogueGetApi from 'globalModule/api/catalogueGetApi'
+import catalogueGetApi from 'globalStore/api/catalogueGetApi'
+import paginationStore from 'globalStore/paginationStore'
 
 import { getField, updateField } from 'vuex-map-fields'
 
@@ -12,12 +13,6 @@ function initAction () {
     id: null,
     name: null,
     accepted_extension: [],
-  }
-}
-function initFilter () {
-  return {
-    page: 1,
-    per_page: 1000,
   }
 }
 function initState () {
@@ -37,7 +32,6 @@ function initState () {
     current_action_index: null,
     current_action: initAction(),
     modal_action: false,
-    filters: initFilter(),
     extensions: null,
   }
 }
@@ -117,20 +111,20 @@ const actions = {
     commit('setCurrentAction', item)
     commit('showModal', { modal: 'modal_action', status: true })
   },
-  async actionGetApi ({ state, commit }) {
-    const response = await actionGetApi(state.filters)
+  async actionGetApi ({ state, commit }, request) {
+    commit('actionStore/paginationStore/setLoading', true, { root: true })
+    const response = await actionGetApi(request)
     if ('payload' in response.data) {
-      commit('setItems', response.data.payload.data)
+      commit('actionStore/paginationStore/init', response.data.payload, { root: true })
     }
-    commit('setLoading', false)
   },
   async deleteAction ({ commit }, item) {
     const response = await actionDeleteApi(item.id)
     if ('payload' in response.data) {
       response.data.payload && commit('removeItemInItems', item)
-      commit('globalModule/errorSnackbar', response, { root: true })
+      commit('globalStore/errorSnackbar', response, { root: true })
     } else {
-      commit('globalModule/errorSnackbar', response, { root: true })
+      commit('globalStore/errorSnackbar', response, { root: true })
     }
   },
   async saveAction ({ state, commit, dispatch }) {
@@ -140,16 +134,20 @@ const actions = {
       commit('setProgressLoading', { name: 'loading_modal_action', status: false })
       commit('showModal', { modal: 'modal_action', status: false })
       commit('resetCurrentAction')
-      dispatch('actionGetApi')
-      commit('globalModule/errorSnackbar', response, { root: true })
+      dispatch('actionGetApi', state.paginationStore.pagination_request)
+      commit('globalStore/errorSnackbar', response, { root: true })
     } else {
       commit('setProgressLoading', { name: 'loading_modal_action', status: false })
-      commit('globalModule/errorSnackbar', response, { root: true })
+      commit('globalStore/errorSnackbar', response, { root: true })
     }
   },
   setSelectedItem ({ commit }, res) {
     console.log(res)
   },
+}
+
+const modules = {
+  paginationStore,
 }
 export default {
   name: 'actionStore',
@@ -158,4 +156,5 @@ export default {
   getters,
   actions,
   mutations,
+  modules,
 }
