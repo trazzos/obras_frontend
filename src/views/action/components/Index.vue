@@ -22,6 +22,7 @@
         @click="addAction"
       >Agregar</v-btn>
     </v-toolbar>
+
       <v-data-table
         :headers="headers"
         :items="items"
@@ -33,11 +34,29 @@
           itemsPerPageOptions: [datatable_options.itemsPerPage],
           showCurrentPage: true,
         }"
-        :search.sync="search"
         :sort-by="['name']"
         :sort-desc="[false, true]"
         multi-sort
       >
+        <template
+          v-slot:top
+        >
+          <v-row>
+            <v-col
+              cols="12"
+              sm="6"
+              md="4"
+            >
+              <v-text-field
+                id="nameAction"
+                @input="formPredicates"
+                outlined
+                label="Buscar por nombre"
+                dense
+              />
+            </v-col>
+          </v-row>
+        </template>
         <template v-slot:item.action="{ item }">
           <custom-action-row
             :row ="item"
@@ -59,7 +78,7 @@
 
   import actionStore from 'actionModule/stores/actionStore'
   import CustomModalAction from 'actionModule/components/CustomModalAction'
-  import CustomActionRow from 'globalStore/components/CustomActionRow'
+  import CustomActionRow from 'globalModule/components/CustomActionRow'
   export default {
     name: 'DashboardDataTables',
     components: {
@@ -102,6 +121,7 @@
         'deleteAction',
         'editAction',
         'addAction',
+        'formPredicates',
       ]),
     },
     data: () => ({

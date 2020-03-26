@@ -48,7 +48,7 @@
 <script>
   import stageStore from 'stageModule/stores/stageStore'
   import CustomFormTask from 'stageModule/components/task/CustomFormTask'
-  import CustomActionModal from 'globalStore/components/CustomActionModal'
+  import CustomActionModal from 'globalModule/components/CustomActionModal'
   import { mapFields } from 'vuex-map-fields'
   import { mapActions, mapMutations } from 'vuex'
 

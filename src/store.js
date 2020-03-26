@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import globalStore from 'globalStore/globalStore'
+import globalStore from 'globalModule/globalStore'
 
 Vue.use(Vuex)
 

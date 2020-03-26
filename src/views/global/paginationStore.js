@@ -8,11 +8,13 @@ function initState () {
       itemsPerPage: 5,
       totalItems: 0,
       lastPage: 0,
+      predicates: [],
       // sortBy: 'fat',
     },
     items: [],
     loading: true,
     pagination_request: {},
+
   }
 }
 
@@ -25,7 +27,6 @@ const mutations = {
   init (state, payload) {
     state.items = payload.data
     state.datatable_options.totalItems = payload.total
-    state.datatable_options.lastPage = payload.last_page
     state.loading = false
   },
   setLoading (state, status) {
@@ -35,7 +36,11 @@ const mutations = {
     state.pagination_request = {
       page: state.datatable_options.page,
       per_page: state.datatable_options.itemsPerPage,
+      predicates: state.datatable_options.predicates,
     }
+  },
+  resetPages (state) {
+    state.datatable_options = { ...state.datatable_options, page: 1, itemsPerPage: 5 }
   },
 }
 
@@ -43,7 +48,7 @@ const getters = {
   getField,
 }
 
-const actions = { }
+const actions = {}
 
 export default {
   name: 'paginationModule',

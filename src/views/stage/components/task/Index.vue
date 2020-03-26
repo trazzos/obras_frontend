@@ -43,7 +43,7 @@
 
   import { mapState, mapActions } from 'vuex'
   import stageStore from 'stageModule/stores/stageStore'
-  import CustomActionRow from 'globalStore/components/CustomActionRow'
+  import CustomActionRow from 'globalModule/components/CustomActionRow'
   export default {
     name: 'DashboardDataTables',
     components: {

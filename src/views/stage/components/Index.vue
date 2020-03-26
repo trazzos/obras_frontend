@@ -80,7 +80,7 @@
   import CustomModalStage from 'stageModule/components/CustomModalStage'
   import CustomModalTask from 'stageModule/components/task/CustomModalTask'
   import CustomModalTaskStage from 'stageModule/components/CustomModalTaskStage'
-  import CustomActionTreeview from 'globalStore/components/CustomActionTreeview'
+  import CustomActionTreeview from 'globalModule/components/CustomActionTreeview'
   export default {
     name: 'DashboardDataTables',
     components: {
