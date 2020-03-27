@@ -63,7 +63,7 @@ const getters = {
 }
 
 const actions = {
-  async formPredicates ({ state, commit }, payload) {
+  formPredicates ({ state, commit }, payload) {
     const predicate = {
       name: payload.target.id,
       comparison: payload.target.getAttribute('comparison'),
@@ -71,7 +71,7 @@ const actions = {
       value: payload.target.value,
     }
     const currentPredicates = state.datatable_options.predicates
-    const key = await currentPredicates.map(e => { return e.name }).indexOf(predicate.name)
+    const key = currentPredicates.map(e => { return e.name }).indexOf(predicate.name)
     if (key >= 0) {
       commit('setPredicate', { predicate, type: 'update', key })
     } else {
