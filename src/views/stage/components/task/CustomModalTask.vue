@@ -53,10 +53,30 @@
   import { mapActions, mapMutations } from 'vuex'
 
   export default {
-    name: 'CustomModalTask',
+    name: 'custom-modal-task',
     components: {
       CustomFormTask,
       CustomActionModal,
+    },
+    computed: {
+      ...mapFields(stageStore.name, [
+        'modal_task',
+        'current_task_index',
+        'loading_modal_task',
+      ]),
+      titleForm () {
+        return (this.current_task_index === null) ? 'Agregar tarea' : 'Editar tarea'
+      },
+    },
+    methods: {
+      ...mapMutations(stageStore.name, [
+        'showModal',
+        'resetCurrentTask',
+        'resetCurrentStage',
+      ]),
+      ...mapActions(stageStore.name, [
+        'saveTask',
+      ]),
     },
     data: () => ({
       actions: [
@@ -72,29 +92,10 @@
         },
       ],
     }),
-    computed: {
-      ...mapFields(stageStore.name, [
-        'modal_task',
-        'current_task_index',
-        'loading_modal_task',
-      ]),
-      titleForm () {
-        return (this.current_task_index === null) ? 'Agregar tarea' : 'Editar tarea'
-      },
-    },
     watch: {
       modal_task (val) {
         !val && this.resetCurrentTask()
       },
-    },
-    methods: {
-      ...mapMutations(stageStore.name, [
-        'showModal',
-        'resetCurrentTask',
-      ]),
-      ...mapActions(stageStore.name, [
-        'saveTask',
-      ]),
     },
   }
 </script>

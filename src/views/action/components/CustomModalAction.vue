@@ -1,7 +1,7 @@
 <template>
     <v-dialog
-      v-model="modal_stage"
-      max-width="500px"
+      v-model="modal_action"
+      max-width="800px"
       hide-overlay
       persistent
     >
@@ -16,7 +16,7 @@
         <v-overlay
           :absolute="true"
           :opacity="0.15"
-          :value="loading_modal_stage"
+          :value="loading_modal_action"
           :z-index="5"
         >
           <v-progress-circular
@@ -27,7 +27,7 @@
         </v-overlay>
         <v-card-text>
           <v-container>
-            <custom-form-stage />
+            <custom-form-action />
           </v-container>
         </v-card-text>
         <v-divider />
@@ -36,7 +36,7 @@
             outlined
             color="primary"
             class="v-btn--text white--text font-weight-bold"
-            @click="showModal({ modal:'modal_stage', status: false})"
+            @click="showModal({ modal:'modal_action', status: false})"
           >
             Cancelar
           </v-btn>
@@ -44,7 +44,7 @@
             outlined
             color="primary"
             class="v-btn--text white--text font-weight-bold"
-            @click="saveStage"
+            @click="saveAction"
           >
             Guardar
           </v-btn>
@@ -53,33 +53,42 @@
     </v-dialog>
 </template>
 <script>
-  import CustomFormStage from 'stageModule/components/CustomFormStage'
-  import stageStore from 'stageModule/stores/stageStore'
+  import CustomFormAction from 'actionModule/components/CustomFormAction'
+  import actionStore from 'actionModule/stores/actionStore'
   import { mapFields } from 'vuex-map-fields'
   import { mapActions, mapMutations } from 'vuex'
   export default {
-    name: 'CustomModalStage',
+    name: 'CustomModalAction',
     components: {
-      CustomFormStage,
+      CustomFormAction,
+    },
+    mounted () {
+      this.loadExtensions()
     },
     computed: {
-      ...mapFields(stageStore.name, [
-        'modal_stage',
-        'current_stage_index',
-        'loading_modal_stage',
+      ...mapFields(actionStore.name, [
+        'modal_action',
+        'current_action_index',
+        'loading_modal_action',
       ]),
       titleForm () {
-        return (this.current_stage_index === null) ? 'Agregar etapa' : 'Editar etapa'
+        return (this.current_action_index === null) ? 'Agregar acción' : 'Editar acción'
       },
     },
     watch: {
-      modal_stage (val) {
-        !val && this.resetCurrentStage()
+      modal_action (val) {
+        !val && this.resetCurrentAction()
       },
     },
     methods: {
-      ...mapActions(stageStore.name, ['saveStage']),
-      ...mapMutations(stageStore.name, ['showModal', 'resetCurrentStage']),
+      ...mapActions(actionStore.name, [
+        'saveAction',
+        'loadExtensions',
+      ]),
+      ...mapMutations(actionStore.name, [
+        'showModal',
+        'resetCurrentAction',
+      ]),
     },
   }
 </script>

@@ -8,10 +8,27 @@ import taskPatchApi from 'stageModule/api/taskPatchApi'
 import taskDeleteApi from 'stageModule/api/taskDeleteApi'
 
 import { getField, updateField } from 'vuex-map-fields'
+function getParent (root, id) {
+  var ii, node
+  for (ii = 0; ii < root.length; ii++) {
+    node = root[ii]
+    if (node.id === id || (node.children && (node = getParent(node.children, id)))) {
+      return node
+    }
+  }
+  return null
+}
+
 function initStage () {
   return {
     id: null,
     name: null,
+  }
+}
+function initFilter () {
+  return {
+    page: 1,
+    per_page: 10,
   }
 }
 function initTask () {
@@ -68,6 +85,7 @@ function initState () {
       },
       { text: 'Accciones', value: 'action', sortable: false, width: '5%' },
     ],
+    filters: initFilter(),
   }
 }
 
@@ -105,11 +123,44 @@ const mutations = {
     state.tasks = payload
   },
   /* task mutations */
+  loadChildren (state, item) {
+    var id
+    switch (item.name_children) {
+      case 'stage':
+        id = state.stages.indexOf(item)
+        state.current_stage_index = id
+        var tasks = item.task.map((res) => {
+          return { ...res, children: [], name_children: 'task' } // ('actions' in res) ? res.actions.length ? { ...res, children: [], name_children: 'task' } : res : res
+        })
+        state.stages[id].children = tasks
+      break
+      case 'task':
+        var parentId = state.stages.indexOf(getParent(state.stages, item.stage_id))
+        id = state.stages[parentId].children.indexOf(item)
+        var ac = [
+          {
+            name: 'acccion 1',
+            id: 'seer',
+            name_children: 'action',
+          },
+          {
+            name: 'acccion 2',
+            id: 'seer3',
+            name_children: 'action',
+          },
+        ]
+        state.stages[parentId].children[id].children = ac
+      break
+    }
+  },
   setItemInTasks (state, payload) {
     if (state.current_task_index === null) {
-        state.tasks.push(payload)
+        state.stages[state.current_stage_index] = !('children' in state.stages[state.current_stage_index])
+        ? { ...state.stages[state.current_stage_index], children: [] }
+        : state.stages[state.current_stage_index]
+        state.stages[state.current_stage_index].children.push({ ...payload, children: [], name_children: 'task' })
     } else {
-      Object.assign(state.tasks[state.current_task_index], { ...payload })
+      Object.assign(state.stages[state.current_stage_index].children[state.current_task_index], { ...payload })
     }
   },
   resetCurrentTask (state) {
@@ -117,12 +168,13 @@ const mutations = {
     state.current_task = initTask()
   },
   setCurrentTask (state, item) {
-    state.current_task_index = state.tasks.indexOf(item)
+    state.current_task_index = state.stages[state.current_stage_index].children.indexOf(item)
     state.current_task = Object.assign({}, item)
   },
   removeItemInTasks (state, item) {
-    const key = state.tasks.indexOf(item)
-    state.tasks = state.tasks.filter(function (x, i) {
+    var parentId = state.stages.indexOf(getParent(state.stages, item.stage_id))
+    const key = state.stages[parentId].children.indexOf(item)
+    state.stages[parentId].children = state.stages[parentId].children.filter(function (x, i) {
       return i !== key
     })
   },
@@ -153,14 +205,22 @@ const getters = {
 
 const actions = {
   /* stage actions */
+  addStage ({ commit }) {
+    commit('resetCurrentStage')
+    commit('showModal', { modal: 'modal_stage', status: true })
+  },
   editStage ({ commit }, item) {
     commit('setCurrentStage', item)
     commit('showModal', { modal: 'modal_stage', status: true })
   },
   async stageGetApi ({ state, commit }) {
-    const response = await stageGetApi()
+    const response = await stageGetApi(state.filters)
     if ('payload' in response.data) {
-      commit('setStages', response.data.payload)
+      var resp = response.data.payload.data.map((res) => {
+         if (res.task.length) return { ...res, children: [], name_children: 'stage' }
+         else return { ...res, name_children: 'stage' }
+      })
+      commit('setStages', resp)
     }
     commit('setLoading', false)
   },
@@ -189,11 +249,13 @@ const actions = {
     }
   },
   /*  task actions */
-  addTask ({ commit }) {
+  addTask ({ commit }, item) {
+    commit('setCurrentStage', item)
     commit('setCurrentStageInTask')
     commit('showModal', { modal: 'modal_task', status: true })
   },
-  editTask ({ commit }, item) {
+  editTask ({ state, commit }, item) {
+    commit('setCurrentStage', getParent(state.stages, item.stage_id))
     commit('setCurrentTask', item)
     commit('showModal', { modal: 'modal_task', status: true })
   },
@@ -205,13 +267,15 @@ const actions = {
       commit('setProgressLoading', { name: 'loading_modal_task', status: false })
       commit('showModal', { modal: 'modal_task', status: false })
       commit('resetCurrentTask')
+      commit('resetCurrentStage')
       commit('globalStore/errorSnackbar', response, { root: true })
     } else {
       commit('setProgressLoading', { name: 'loading_modal_task', status: false })
       commit('globalStore/errorSnackbar', response, { root: true })
     }
   },
-  async deleteTask ({ commit }, item) {
+  async deleteTask ({ state, commit }, item) {
+    commit('setCurrentStage', getParent(state.stages, item.stage_id))
     const response = await taskDeleteApi(item.id)
     if ('payload' in response.data) {
       response.data.payload && commit('removeItemInTasks', item)
@@ -225,6 +289,9 @@ const actions = {
     commit('setCurrentStage', item)
     commit('setTasks', item.task)
     commit('showModal', { modal: 'modal_task_stage', status: true })
+  },
+  loadChildren ({ commit }, item) {
+    commit('loadChildren', item)
   },
 }
 export default {

@@ -25,11 +25,12 @@ import VueAxios from 'vue-axios'
 import axios from './axios'
 import VueAuth from '@websanova/vue-auth'
 import auth from './plugins/auth'
-
+import VuetifyConfirm from 'vuetify-confirm'
 Vue.router = router
 Vue.use(VueAxios, axios)
 Vue.use(VueAuth, auth)
 Vue.config.productionTip = false
+Vue.use(VuetifyConfirm, { vuetify })
 
 new Vue({
   router,
