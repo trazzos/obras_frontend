@@ -80,11 +80,7 @@
       ]),
       toggle () {
         this.$nextTick(() => {
-          if (this.allSelected) {
-            this.accepted_extension = []
-          } else {
-            this.accepted_extension = this.extensions.filter((ext) => !ext.header)
-          }
+          this.accepted_extension = this.allSelected ? [] : this.extensions.filter((ext) => !ext.header)
         })
       },
     },

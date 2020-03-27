@@ -9,9 +9,9 @@ import taskDeleteApi from 'stageModule/api/taskDeleteApi'
 
 import { getField, updateField } from 'vuex-map-fields'
 function getParent (root, id) {
-  var i, node
-  for (i = 0; i < root.length; i++) {
-    node = root[i]
+  var ii, node
+  for (ii = 0; ii < root.length; ii++) {
+    node = root[ii]
     if (node.id === id || (node.children && (node = getParent(node.children, id)))) {
       return node
     }
@@ -137,14 +137,27 @@ const mutations = {
       case 'task':
         var parentId = state.stages.indexOf(getParent(state.stages, item.stage_id))
         id = state.stages[parentId].children.indexOf(item)
-        var ac = [{ name: 'acccion 1', id: 'seer', name_children: 'action' }, { name: 'acccion 2', id: 'seer3', name_children: 'action' }]
+        var ac = [
+          {
+            name: 'acccion 1',
+            id: 'seer',
+            name_children: 'action',
+          },
+          {
+            name: 'acccion 2',
+            id: 'seer3',
+            name_children: 'action',
+          },
+        ]
         state.stages[parentId].children[id].children = ac
       break
     }
   },
   setItemInTasks (state, payload) {
     if (state.current_task_index === null) {
-        state.stages[state.current_stage_index] = !('children' in state.stages[state.current_stage_index]) ? { ...state.stages[state.current_stage_index], children: [] } : state.stages[state.current_stage_index]
+        state.stages[state.current_stage_index] = !('children' in state.stages[state.current_stage_index])
+        ? { ...state.stages[state.current_stage_index], children: [] }
+        : state.stages[state.current_stage_index]
         state.stages[state.current_stage_index].children.push({ ...payload, children: [], name_children: 'task' })
     } else {
       Object.assign(state.stages[state.current_stage_index].children[state.current_task_index], { ...payload })

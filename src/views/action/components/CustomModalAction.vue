@@ -81,8 +81,14 @@
       },
     },
     methods: {
-      ...mapActions(actionStore.name, ['saveAction', 'loadExtensions']),
-      ...mapMutations(actionStore.name, ['showModal', 'resetCurrentAction']),
+      ...mapActions(actionStore.name, [
+        'saveAction',
+        'loadExtensions',
+      ]),
+      ...mapMutations(actionStore.name, [
+        'showModal',
+        'resetCurrentAction',
+      ]),
     },
   }
 </script>

@@ -48,8 +48,9 @@
               md="4"
             >
               <v-text-field
-                id="nameAction"
-                @input="formPredicates"
+                id="action_name"
+                :comparison="`contains`"
+                @input.native="formPredicates($event)"
                 outlined
                 label="Buscar por nombre"
                 dense
@@ -121,6 +122,8 @@
         'deleteAction',
         'editAction',
         'addAction',
+      ]),
+      ...mapActions('actionStore/paginationStore', [
         'formPredicates',
       ]),
     },

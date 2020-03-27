@@ -67,22 +67,6 @@ const mutations = {
   setExtensions (state, payload) {
     state.extensions = payload
   },
-  setPredicate (state, payload) {
-    switch (payload.type) {
-      case 'update':
-        if (payload.predicate.value !== '') {
-          state.paginationStore.datatable_options.predicates[payload.key] = payload.predicate
-        } else {
-          state.paginationStore.datatable_options.predicates.splice(payload.key, 1)
-        }
-      break
-      case 'add':
-        if (payload.predicate.value) {
-          state.paginationStore.datatable_options.predicates.push(payload.predicate)
-        }
-      break
-    }
-  },
   updateField,
 }
 const getters = {
@@ -152,26 +136,6 @@ const actions = {
       commit('setProgressLoading', { name: 'loading_modal_action', status: false })
       commit('globalStore/errorSnackbar', response, { root: true })
     }
-  },
-  formPredicates ({ state, commit }, res) {
-    // esto creo se debe optimizar y refactorizar de momento como es un solo campo del filtro lo deje asi.
-    const predicate = {
-      name: 'action_name',
-      comparison: 'contains',
-      attribute: 'action.name',
-      value: res,
-    }
-    const currentPredicates = state.paginationStore.datatable_options.predicates
-    if (currentPredicates.length) {
-      const key = currentPredicates.map(e => { return e.name }).indexOf(predicate.name)
-      commit('setPredicate', { predicate, type: 'update', key })
-    } else {
-      commit('setPredicate', { predicate, type: 'add' })
-    }
-    // hice esta mutation por que modificar predicates dentro de  datatable_options con  la mutation setPredicate
-    // no disparaba el watch , creo que option.sync de v-data-table solo mapea y observa sus atributos por default , entonces
-    // los  adicionales no los  watchea :P
-    commit('actionStore/paginationStore/resetPages', {}, { root: true })
   },
 }
 
