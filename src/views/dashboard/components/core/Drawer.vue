@@ -120,6 +120,11 @@
           title: 'Proyectos',
           to: 'project',
         },
+        {
+          icon: 'mdi-domain',
+          title: 'Convocatorias',
+          to: 'announcement',
+        },
       ],
     }),
 

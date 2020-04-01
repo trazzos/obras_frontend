@@ -67,6 +67,14 @@ export default new Router({
             auth: true,
           },
         },
+        {
+          name: 'Convocatorias',
+          path: 'announcement',
+          component: () => import('announcementModule/components/Index'),
+          meta: {
+            auth: true,
+          },
+        },
       ],
     },
     {
